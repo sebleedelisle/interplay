@@ -13,19 +13,7 @@ void ofApp::setup(){
 	// Enable some logging information
 	ofSetLogLevel(OF_LOG_VERBOSE);
 
-	//Client side
-	clientDestination = "localhost";
-	//	clientDestination	= "192.168.0.115"; // if you send to another instance enter IP here
-	clientSendPort = 9000;
-	clientSender.setup(clientDestination, clientSendPort);
-
-	clientRecvPort = clientSendPort + 1;
-	clientReceiver.setup(clientRecvPort);
-    
-    playing = false;
-    
-    
-    masterMeter = 0;
+    ableton.init("localhost", 9000);
     
     
     grabber.initGrabber(1280, 720);
@@ -39,15 +27,10 @@ void ofApp::setup(){
 //--------------------------------------------------------------
 void ofApp::update(){ 
 
-	// OSC receiver queues up new messages, so you need to iterate
-	// through waiting messages to get each incoming message
-    
+    ableton.update();
     grabber.update();
     
-    
     if(grabber.isFrameNew()) {
-        
-       
         
         copy(current, previous);
         
@@ -76,67 +59,14 @@ void ofApp::update(){
     }
     
     
-    
-	// check for waiting messages
-	while(clientReceiver.hasWaitingMessages()){
-		// get the next message
-		ofxOscMessage m;
-		clientReceiver.getNextMessage(&m);
-        if(m.getAddress().find("meter")==string::npos)
-            ofLogNotice("Client : ", getOscMsgAsString(m));
-        
-		// check the address of the incoming message
-		if(m.getAddress() == "/live/master/meter"){
-            
-            if(m.getArgAsInt32(0) == 0 ) {
-                masterMeter = m.getArgAsFloat(1);
-            }
-            
-		} else if(m.getAddress() == "/live/track/meter"){
-            int tracknum = m.getArgAsInt32(0);
 
-            while(tracknum>=trackLevels.size()) {
-                trackLevels.push_back(0);
-            }
-            
-            trackLevels[tracknum] =m.getArgAsFloat(2);
-
-		}
-        else if(m.getAddress() == "/live/play"){
-            if(m.getArgAsInt32(1) == 2) playing = true;
-            else if(m.getArgAsInt32(1) == 1) playing = false;
-            
-		} else if(m.getAddress() == "/live/beat"){
-            int beatnum = m.getArgAsInt32(0);
-            
-            if(beatnum%4 == 0 ) currentScene = motionBand; 
-            
-            
-		}
-        
-	}
-
-	//this is purely workaround for a mysterious OSCpack bug on 64bit linux
-	// after startup, reinit the receivers
-	// must be a timing problem, though - in debug, stepping through, it works.
-	if(ofGetFrameNum() == 60){
-		clientReceiver.setup(clientRecvPort);
-	}
 }
 
 //--------------------------------------------------------------
 void ofApp::draw(){
     ofFill();
     ofBackground(0);
-    ofSetColor(255);
-    ofRect(0,0,masterMeter*ofGetWidth(),10);
-
-    for(int i = 0; i<trackLevels.size(); i++) {
-        
-        ofRect(0, i*20 + 20, trackLevels[i]*ofGetWidth(), 10);
-        
-    }
-    grabber.draw(0,0, 640, 380);
+      grabber.draw(0,0, 640, 380);
     diff.draw(0,420, 640, 380);
     
     float motionLevel = ofClamp(diffMean[0],0,1);
@@ -149,7 +79,7 @@ void ofApp::draw(){
     int newmotionband = (smoothedMean * 4.0f);
     if(newmotionband!=motionBand) {
         motionBand = newmotionband;
-        playClip(motionBand, 0);
+        ableton.playClip(motionBand, 0);
     }
     
     ofSetColor(255,255,255);
@@ -163,20 +93,12 @@ void ofApp::draw(){
 }
 
 
-void ofApp::playClip(int num, int part){
-    ofxOscMessage m;
-    m.setAddress("/live/play/clipslot");
-    m.addIntArg(part);
-    m.addIntArg(num);
-    clientSender.sendMessage(m);
-    
-    
-};
-
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     ofxOscMessage m;
 
+    
+    /*
     if(key == ' ') {
        
         m.setAddress("/live/stop");
@@ -210,73 +132,59 @@ void ofApp::keyPressed(int key){
         m.addIntArg(3);
         clientSender.sendMessage(m);
     }
+     
+     */
 
 }
+
 
 //--------------------------------------------------------------
 void ofApp::keyReleased(int key){
-
+    
 }
 
-//--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y){
-
+void ofApp::exit() {
+    
+    ableton.exit();
+    
+    
 }
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){
-
-}
-
-//--------------------------------------------------------------
-string ofApp::getOscMsgAsString(ofxOscMessage m){
-	string msg_string;
-	msg_string = m.getAddress();
-	msg_string += ":";
-	for(int i = 0; i < m.getNumArgs(); i++){
-		// get the argument type
-		msg_string += " " + m.getArgTypeName(i);
-		msg_string += ":";
-		// display the argument - make sure we get the right type
-		if(m.getArgType(i) == OFXOSC_TYPE_INT32){
-			msg_string += ofToString(m.getArgAsInt32(i));
-		}
-		else if(m.getArgType(i) == OFXOSC_TYPE_FLOAT){
-			msg_string += ofToString(m.getArgAsFloat(i));
-		}
-		else if(m.getArgType(i) == OFXOSC_TYPE_STRING){
-			msg_string += m.getArgAsString(i);
-		}
-		else{
-			msg_string += "unknown";
-		}
-	}
-	return msg_string;
-}
-
-
+/*
+ 
+ 
+ 
+ //--------------------------------------------------------------
+ void ofApp::mouseMoved(int x, int y){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::mouseDragged(int x, int y, int button){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::mousePressed(int x, int y, int button){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::mouseReleased(int x, int y, int button){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::windowResized(int w, int h){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::gotMessage(ofMessage msg){
+ 
+ }
+ 
+ //--------------------------------------------------------------
+ void ofApp::dragEvent(ofDragInfo dragInfo){
+ 
+ }
+*/
