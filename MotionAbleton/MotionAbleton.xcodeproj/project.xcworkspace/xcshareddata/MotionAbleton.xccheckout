@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>FA6FD7E3-8F55-4DC1-8725-F7855CA6B429</string>
+	<key>IDESourceControlProjectName</key>
+	<string>MotionAbleton</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>56251BD3-EA1C-4651-9798-E4F4B6983AE5</key>
+		<string>ssh://github.com/sebleedelisle/interplay.git</string>
+		<key>96E9FE83-C8C5-42AF-9BD7-6943F141559D</key>
+		<string>ssh://github.com/sebleedelisle/openFrameworks.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/interplay/MotionAbleton/MotionAbleton.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>05641FE9-7362-4A9F-952D-9D1AB0C0E4D0</key>
+		<string>../../../../../addons/ofxCv</string>
+		<key>56251BD3-EA1C-4651-9798-E4F4B6983AE5</key>
+		<string>../../..</string>
+		<key>96E9FE83-C8C5-42AF-9BD7-6943F141559D</key>
+		<string>../../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/sebleedelisle/interplay.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>96E9FE83-C8C5-42AF-9BD7-6943F141559D</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>56251BD3-EA1C-4651-9798-E4F4B6983AE5</string>
+			<key>IDESourceControlWCCName</key>
+			<string>interplay</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>05641FE9-7362-4A9F-952D-9D1AB0C0E4D0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCv</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>96E9FE83-C8C5-42AF-9BD7-6943F141559D</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openFrameworks</string>
+		</dict>
+	</array>
+</dict>
+</plist>

@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxOsc.h"
+#include "AudienceSection.h"
 
 #include "AbletonController.h"
 #include "ofxCv.h"
@@ -12,6 +13,9 @@ using namespace ofxCv;
 class ofApp : public ofBaseApp {
 
 	public:
+
+		ofApp() : ableton(*AbletonController::instance()){
+		};
 		void setup();
 		void update();
 		void draw();
@@ -21,9 +25,10 @@ class ofApp : public ofBaseApp {
         void exit(); 
     
     
-    
-	 
-    AbletonController ableton;
+	int thresholdLevel; 
+    AbletonController& ableton;
+	AudienceSection audience1;
+	
     ofVideoGrabber grabber;
     ofImage current;
     ofPixels previous;
