@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>134FC1D7-B3C0-45A6-946E-799B8EC3DBEA</string>
+	<key>IDESourceControlProjectName</key>
+	<string>ValPlay</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>1692C2E1-093C-4E9D-B674-9D9984749040</key>
+		<string>ssh://github.com/sebleedelisle/openFrameworks.git</string>
+		<key>CCB3DBF2-3414-4D19-AB3E-4AA777C7DF2E</key>
+		<string>https://github.com/sebleedelisle/interplay.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>apps/interplay/ValPlay2/ValPlay.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>1692C2E1-093C-4E9D-B674-9D9984749040</key>
+		<string>../../../../..</string>
+		<key>CCB3DBF2-3414-4D19-AB3E-4AA777C7DF2E</key>
+		<string>../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/sebleedelisle/interplay.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>1692C2E1-093C-4E9D-B674-9D9984749040</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>CCB3DBF2-3414-4D19-AB3E-4AA777C7DF2E</string>
+			<key>IDESourceControlWCCName</key>
+			<string>interplay</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>1692C2E1-093C-4E9D-B674-9D9984749040</string>
+			<key>IDESourceControlWCCName</key>
+			<string>openFrameworks</string>
+		</dict>
+	</array>
+</dict>
+</plist>
