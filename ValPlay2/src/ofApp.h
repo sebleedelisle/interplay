@@ -1,7 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-#include "shape.h";
+#include "InstShape.h"
 
 class ofApp : public ofBaseApp{
 
@@ -21,8 +21,16 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
-        Shape theShape;
+        void makeDrumShapes(int num, float volume);
+        void makeBassShapes(int num, float volume);
+        void makeSynthShapes(int num, float volume);
+        void makeGuitarShapes(int num, float volume);
+        vector<InstShape> drumShapes;
+        vector<InstShape> bassShapes;
+        vector<InstShape> synthShapes;
+        vector<InstShape> guitarShapes;
+    
         ofImage room;
-        ofColor color;
+      
 		
 };
