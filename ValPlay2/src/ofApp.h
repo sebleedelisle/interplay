@@ -21,6 +21,11 @@ class ofApp : public ofBaseApp{
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
     
+    
+        bool shouldRemove(InstShape p);
+    
+    
+    
         void makeDrumShapes(int num, float volume);
         void makeBassShapes(int num, float volume);
         void makeSynthShapes(int num, float volume);

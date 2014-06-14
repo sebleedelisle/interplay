@@ -20,12 +20,34 @@ void ofApp::setup(){
 }
 
 
+// write our boolean remove function
+//bool shouldRemove(Particle &p){
+//    if(p.pos.y > ofGetHeight() )return true;
+//    else return false;
+//}
+
 
 
 //--------------------------------------------------------------
 void ofApp::update(){
- //makeDrumShapes(1);
-   
+    for(int i = 0; i < drumShapes.size(); i++){
+        drumShapes[i].update();
+    }
+    
+    for(int i = 0; i < bassShapes.size(); i++) {
+        bassShapes[i].update();
+    }
+    
+    for(int i = 0; i < synthShapes.size(); i++) {
+        synthShapes[i].update();
+    }
+    
+    for(int i = 0; i < guitarShapes.size(); i++) {
+        guitarShapes[i].update();
+    }
+ 
+    //ofRemove(particles,shouldRemove);
+    
 }
 
 //--------------------------------------------------------------
@@ -35,28 +57,20 @@ void ofApp::draw(){
     room.draw(0,0);
     
     /*http://www.openframeworks.cc/tutorials/c++%20concepts/001_stl_vectors_basic.html */
-    vector<InstShape>::iterator it1 = drumShapes.begin();
-    for(; it1 != drumShapes.end(); ++it1) {
-        (*it1).update();
-        (*it1).render();
+    for(int i = 0; i < drumShapes.size(); i++){
+        drumShapes[i].render();
     }
     
-    vector<InstShape>::iterator it2 = bassShapes.begin();
-    for(; it2 != bassShapes.end(); ++it2) {
-        (*it2).update();
-        (*it2).render();
+     for(int i = 0; i < bassShapes.size(); i++) {
+        bassShapes[i].render();
     }
     
-    vector<InstShape>::iterator it3 = synthShapes.begin();
-    for(; it3 != synthShapes.end(); ++it3) {
-        (*it3).update();
-        (*it3).render();
+     for(int i = 0; i < synthShapes.size(); i++) {
+        synthShapes[i].render();
     }
     
-    vector<InstShape>::iterator it4 = guitarShapes.begin();
-    for(; it4 != guitarShapes.end(); ++it4) {
-        (*it4).update();
-        (*it4).render();
+   for(int i = 0; i < guitarShapes.size(); i++) {
+        guitarShapes[i].render();
     }
 
    
