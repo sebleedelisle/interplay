@@ -5,38 +5,40 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>041ACE5B-A1EE-4E89-A9E8-21316DF4B931</string>
+	<string>FA6FD7E3-8F55-4DC1-8725-F7855CA6B429</string>
 	<key>IDESourceControlProjectName</key>
 	<string>MotionAbleton</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
-		<key>12785FA1-BBE9-43D1-B4FD-3DCBA6E7CF64</key>
-		<string>https://github.com/sebleedelisle/interplay.git</string>
-		<key>E68B3096-5509-4189-A5F2-D54365FD2226</key>
+		<key>56251BD3-EA1C-4651-9798-E4F4B6983AE5</key>
+		<string>ssh://github.com/sebleedelisle/interplay.git</string>
+		<key>96E9FE83-C8C5-42AF-9BD7-6943F141559D</key>
 		<string>ssh://github.com/sebleedelisle/openFrameworks.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>apps/interplay/MotionAbleton/MotionAbleton.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
-		<key>12785FA1-BBE9-43D1-B4FD-3DCBA6E7CF64</key>
+		<key>05641FE9-7362-4A9F-952D-9D1AB0C0E4D0</key>
+		<string>../../../../../addons/ofxCv</string>
+		<key>56251BD3-EA1C-4651-9798-E4F4B6983AE5</key>
 		<string>../../..</string>
-		<key>E68B3096-5509-4189-A5F2-D54365FD2226</key>
+		<key>96E9FE83-C8C5-42AF-9BD7-6943F141559D</key>
 		<string>../../../../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/sebleedelisle/interplay.git</string>
+	<string>ssh://github.com/sebleedelisle/interplay.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
-	<string>E68B3096-5509-4189-A5F2-D54365FD2226</string>
+	<string>96E9FE83-C8C5-42AF-9BD7-6943F141559D</string>
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>12785FA1-BBE9-43D1-B4FD-3DCBA6E7CF64</string>
+			<string>56251BD3-EA1C-4651-9798-E4F4B6983AE5</string>
 			<key>IDESourceControlWCCName</key>
 			<string>interplay</string>
 		</dict>
@@ -44,7 +46,15 @@
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
 			<string>public.vcs.git</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
-			<string>E68B3096-5509-4189-A5F2-D54365FD2226</string>
+			<string>05641FE9-7362-4A9F-952D-9D1AB0C0E4D0</string>
+			<key>IDESourceControlWCCName</key>
+			<string>ofxCv</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>96E9FE83-C8C5-42AF-9BD7-6943F141559D</string>
 			<key>IDESourceControlWCCName</key>
 			<string>openFrameworks</string>
 		</dict>

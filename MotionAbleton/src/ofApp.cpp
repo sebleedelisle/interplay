@@ -2,6 +2,9 @@
 
 using namespace ofxCv;
 using namespace cv;
+
+
+
 //--------------------------------------------------------------
 void ofApp::setup(){
 	ofSetFrameRate(60); // run at 60 fps
@@ -13,14 +16,17 @@ void ofApp::setup(){
 	// Enable some logging information
 	ofSetLogLevel(OF_LOG_VERBOSE);
 
-    ableton.init("localhost", 9000);
+    ableton.init("localhost");
     
+    grabber.setDeviceID(1);
+    grabber.initGrabber(1280, 720, 30);
+	//grabber.videoSettings();
     
-    grabber.initGrabber(1280, 720);
-    imitate(current, grabber);
+	imitate(current, grabber);
     imitate(previous, grabber);
     imitate(diff, grabber);
-            
+	
+    thresholdLevel = 40;
     
 }
 
@@ -42,10 +48,9 @@ void ofApp::update(){
         absdiff(previous, current, diff);
         
         // and run a threshold filter on it if required
-       // if(thresholdLevelParam>0)
-       //     threshold(diff, thresholdLevelParam);
-        
-        
+        if(thresholdLevel>0)
+            threshold(diff, thresholdLevel);
+
         diff.update();
         
         // mean() returns a Scalar. it's a cv:: function so we have to pass a Mat
@@ -57,7 +62,7 @@ void ofApp::update(){
         
         
     }
-    
+    audience1.update(diff);
     
 
 }
@@ -66,9 +71,15 @@ void ofApp::update(){
 void ofApp::draw(){
     ofFill();
     ofBackground(0);
-      grabber.draw(0,0, 640, 380);
-    diff.draw(0,420, 640, 380);
-    
+	ofSetColor(255);
+      grabber.draw(0,0, 1280, 720);
+	ofEnableBlendMode(OF_BLENDMODE_ADD);
+    diff.draw(0,0, 1280, 720);
+    ofDisableBlendMode();
+	
+	audience1.draw();
+	
+	/*
     float motionLevel = ofClamp(diffMean[0],0,1);
     
     ofNoFill();
@@ -89,25 +100,23 @@ void ofApp::draw(){
     ofRect(0, currentScene * (380.0f/4.0f), 640, (380.0f/4.0f));
     
     
-	
+	*/
 }
 
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
     ofxOscMessage m;
-
     
-    /*
     if(key == ' ') {
        
-        m.setAddress("/live/stop");
-        clientSender.sendMessage(m);
+        ableton.sendMessage("/live/stop");
     }
     else if(key == OF_KEY_RETURN) {
-         m.setAddress("/live/play");
-        clientSender.sendMessage(m);
+         ableton.sendMessage("/live/play");
+
     }
+	/*
     else if(key == '1') {
         m.setAddress("/live/play/clipslot");
         m.addIntArg(0);
@@ -127,13 +136,13 @@ void ofApp::keyPressed(int key){
         clientSender.sendMessage(m);
     }
     else if(key == '4') {
-        m.setAddress("/live/play/clipslot");
+        m.setAddress("/live/play/clipsldi di	ot");
         m.addIntArg(0);
         m.addIntArg(3);
         clientSender.sendMessage(m);
-    }
+    }*/
      
-     */
+    
 
 }
 
@@ -149,42 +158,3 @@ void ofApp::exit() {
     
     
 }
-/*
- 
- 
- 
- //--------------------------------------------------------------
- void ofApp::mouseMoved(int x, int y){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::mouseDragged(int x, int y, int button){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::mousePressed(int x, int y, int button){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::mouseReleased(int x, int y, int button){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::windowResized(int w, int h){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::gotMessage(ofMessage msg){
- 
- }
- 
- //--------------------------------------------------------------
- void ofApp::dragEvent(ofDragInfo dragInfo){
- 
- }
-*/
