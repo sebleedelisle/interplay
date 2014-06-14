@@ -19,9 +19,9 @@ void ofApp::setup(){
     
 }
 
-
+//need to do something to take out old ones, but this doesn't make sense to me right now. thinking :)
 // write our boolean remove function
-//bool shouldRemove(Particle &p){
+//bool shouldRemove(InstShape &p){
 //    if(p.pos.y > ofGetHeight() )return true;
 //    else return false;
 //}
@@ -46,7 +46,7 @@ void ofApp::update(){
         guitarShapes[i].update();
     }
  
-    //ofRemove(particles,shouldRemove);
+    //ofRemove(guitarShapes,shouldRemove);
     
 }
 

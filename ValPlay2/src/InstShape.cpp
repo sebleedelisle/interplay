@@ -72,7 +72,24 @@ void InstShape::drawBass() {
     ofTranslate(pos.x,pos.y,pos.z);
     ofRotate(rotation);
     ofScale(scale,scale);
-    ofRect(0,0,0,size*1.25,size);
+    //ofRect(0,0,0,size*1.25,size);
+    
+    ofLine(-11,-6,-7,-12);
+    ofLine(-7,-12,7,-12);
+    ofLine(7,-12,11,-6);
+    ofLine(11,-6,0,11);
+    ofLine(0,11,-11,-6);
+    
+    ofLine(-11,-6,11,-6);
+    
+    ofLine(-7,-12,-3,-6);
+    ofLine(-3,-6,0,-12);
+    ofLine(0,-12,4,-6);
+    ofLine(4,-6,7,-12);
+    
+    ofLine(-3,-6,0,11);
+    ofLine(0,11,4,-6);
+    
     ofPopMatrix();
 }
 
@@ -82,7 +99,15 @@ void InstShape::drawSynth() {
     ofTranslate(pos.x,pos.y,pos.z);
     ofRotate(rotation);
     ofScale(scale,scale);
-    ofTriangle(0,0,0,10,5,10, 10,15,10);
+    //ofTriangle(0,0,0,10,5,10, 10,15,10);
+    
+    
+    ofLine(-2,-5,10,-3);
+    ofLine(10,-3,-10,6);
+    ofLine(-10,6,-2,-5);
+    
+    ofLine(-10,6,3,-4);
+
     ofPopMatrix();
 }
 
@@ -96,7 +121,19 @@ void InstShape::drawGuitar() {
     ofTranslate(pos.x,pos.y,pos.z);
     ofRotate(rotation);
     ofScale(scale,scale);
-    ofRect(0,0,0,10,10);
+   
+    ofLine(7,-8,7,-5);
+    ofLine(7,-5,-7,-5);
+    ofLine(-7,-5,-7,-2);
+    ofLine(-7,-2,7,-2);
+    ofLine(7,-2,7,0);
+    ofLine(7,0,-7,0);
+    ofLine(-7,0,-7,2);
+    ofLine(-7,2,7,2);
+    ofLine(7,2,7,4);
+    ofLine(7,4,-7,4);
+    ofLine(-7,4,-7,7);
+
     ofPopMatrix();
 }
 
