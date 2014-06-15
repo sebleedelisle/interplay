@@ -14,7 +14,8 @@ using namespace ofxCv;
 AudienceSection::AudienceSection() {
 	unwarped.allocate(150, 400, OF_IMAGE_COLOR);
 
-	
+	currentScene = 0;
+	motionBand = 0;
 	numScenes = 4;
 	motionLevel = 0;
 	smoothedMotionLevel = 0;
@@ -105,21 +106,30 @@ void AudienceSection :: draw() {
 	
 	
 	ofPushMatrix();
-	ofTranslate(rect.x, rect.getBottom());
+	ofTranslate(0,28);
+	//cout << ofGetMouseY() - ofGetHeight()/2 << endl;
+	ofTranslate(rect.getCenter());
+	ofRotateX(70);
+	ofTranslate(-rect.width/2,rect.height/2);
+	//ofTranslate(0,-50,-50);
 	ofScale(1,-1);
-	ofRotateX(-30);
+	
+	
 
     ofSetColor(0,255,255);
 	ofRect(0,0,rect.width, rect.height);
 	
-	ofSetColor(255,255,255);
-    ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
-    ofSetColor(255,0,0,100);
-    ofFill();
-       ofRect(0,  (currentScene * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
-	ofSetColor(255,255,255);
 	
-
+	ofSetColor(200,0,0,100);
+    ofFill();
+	
+    if((ofGetElapsedTimeMillis() % 400 < 200) && (currentScene!=motionBand)) ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
+	
+	ofSetColor(255,0,0,100);
+	ofRect(0,  (currentScene * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
+	
+	
+	ofSetColor(255,255,255);
 	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
 	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
 	ofPopMatrix();

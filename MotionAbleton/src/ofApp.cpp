@@ -46,11 +46,11 @@ void ofApp::setup(){
 
 	
 	for(int i = 0; i<4; i++) {
-		float x = ofMap(i, 0, 3, ofGetWidth()*0.15, ofGetWidth()*0.85);
+		float x = ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.8);
 		float y = ofGetHeight()/2;
 		
-		float halfwidth = 150;
-		float halfheight = 300;
+		float halfwidth = (ofGetWidth()*0.6/6)-2;
+		float halfheight = 320;
 		
 		
 		ofRectangle rect(x-halfwidth, y - halfheight, halfwidth*2, halfheight*2);
@@ -67,7 +67,6 @@ void ofApp::setup(){
 		
 	}
 	
-	//audience1.init(
 	audiencePreview.loadImage("img/FPORoom.jpg");
  
 }
