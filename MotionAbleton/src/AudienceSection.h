@@ -40,6 +40,7 @@ class AudienceSection {
 	int motionBand;
     int currentScene;
 	int numScenes;
-
+    
+    vector<ofColor> fillColours;
 
 };

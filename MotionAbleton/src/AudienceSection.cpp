@@ -21,7 +21,12 @@ AudienceSection::AudienceSection() {
 	smoothedMotionLevel = 0;
 	motionLevelMin = 2;
 	motionLevelMax = 10;
-	
+    
+    fillColours.push_back(ofColor(255,206,39,255));
+    fillColours.push_back(ofColor(124,206,248,255));
+    fillColours.push_back(ofColor(35,121,172,255));
+    fillColours.push_back(ofColor(229,49,35,255));
+    
 }
 
 
@@ -84,7 +89,8 @@ void AudienceSection :: draw() {
 	ofEnableAlphaBlending();
 	ofNoFill();
     
-	ofPushMatrix();
+	//showing the motion image in the top left
+    ofPushMatrix();
 	ofScale(0.2,0.2);
 	unwarped.draw(abletonChannel*(unwarped.width+10), 0);
 	ofPopMatrix();
@@ -101,40 +107,48 @@ void AudienceSection :: draw() {
 //		
 //	}
     
-	ofRectangle rect = area;
+	//rect defining the channel
+    ofRectangle rect = area;
 	
 	
 	
 	ofPushMatrix();
+    //translate to middle
 	ofTranslate(0,28);
 	//cout << ofGetMouseY() - ofGetHeight()/2 << endl;
 	ofTranslate(rect.getCenter());
+    //flatten it down a bit, perspectivy
 	ofRotateX(70);
+    //translate to bottom left
 	ofTranslate(-rect.width/2,rect.height/2);
 	//ofTranslate(0,-50,-50);
-	ofScale(1,-1);
+	//flipping the y scale -- might mess with the numbers
+    ofScale(1,-1);
 	
 	
-
-    ofSetColor(0,255,255);
-	ofRect(0,0,rect.width, rect.height);
+    //outline of each channel
+  	ofSetColor(fillColours[abletonChannel]);
+    ofRect(0,0,rect.width, rect.height);
 	
-	
-    
+  
 	ofFill();
-	ofSetColor(100,0,0,100);
+	
+   ofSetColor(fillColours[abletonChannel].r, fillColours[abletonChannel].g, fillColours[abletonChannel].b,100);
+    
+ 
 	ofSetLineWidth(4);
+    
    // if((ofGetElapsedTimeMillis() % 400 < 200) && (currentScene!=motionBand))
 	ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
+    
 	
-	ofSetColor(255,0,0,100);
+	  ofSetColor(fillColours[abletonChannel]);
 	ofRect(0,  (currentScene * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
 
 	ofSetColor(255,255,255);
 	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
 	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
 	ofPopMatrix();
-	
 	
 	
 	ofPopStyle();
