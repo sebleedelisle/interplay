@@ -30,10 +30,10 @@ class ofApp : public ofBaseApp{
         void makeBassShapes(int num, float volume);
         void makeSynthShapes(int num, float volume);
         void makeGuitarShapes(int num, float volume);
-        vector<InstShape> drumShapes;
-        vector<InstShape> bassShapes;
-        vector<InstShape> synthShapes;
-        vector<InstShape> guitarShapes;
+        deque<InstShape> drumShapes;
+        deque<InstShape> bassShapes;
+        deque<InstShape> synthShapes;
+        deque<InstShape> guitarShapes;
     
         ofImage room;
       

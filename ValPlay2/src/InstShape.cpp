@@ -12,7 +12,10 @@ void InstShape::init(int inst) {
     scale = 1;
     alpha = 1;
     rotation= 45;
-
+    spin = 1;
+    
+    rotationAxis.set(1, ofRandom(0,180),ofRandom(0,360));
+    
 }
 
 void InstShape::update(){
@@ -22,7 +25,7 @@ void InstShape::update(){
     pos += vel;
     
     if (rotation > 0 ){
-        rotation++;
+        rotation+=spin;
     }
 }
 
@@ -80,10 +83,10 @@ void InstShape::drawBass() {
     ofSetColor(124,213,248); //lt blue
     
     ofPushMatrix();
-    ofTranslate(pos.x,pos.y,pos.z);
-    ofRotate(rotation);
+    ofTranslate(pos);
+   //ofRotate(rotation);
+    ofRotate(rotation, rotationAxis.x, rotationAxis.y, rotationAxis.z);
     ofScale(scale,scale);
-    //ofRect(0,0,0,size*1.25,size);
     
     ofLine(-11,-6,-7,-12);
     ofLine(-7,-12,7,-12);
@@ -107,17 +110,17 @@ void InstShape::drawBass() {
 void InstShape::drawSynth() {
     ofSetColor(35,121,172); //dk blue
     ofPushMatrix();
-    ofTranslate(pos.x,pos.y,pos.z);
-    ofRotate(rotation);
+    ofTranslate(pos);
+    ofRotate(rotation, rotationAxis.x, rotationAxis.y, rotationAxis.z);
     ofScale(scale,scale);
-    //ofTriangle(0,0,0,10,5,10, 10,15,10);
+       
+    ofLine(-2,-5,15, 10,-3,10);
+    ofLine(10,-3,10,  -10,6,0);
+    ofLine(-10,6,0, -2,-5,15);
     
-    
-    ofLine(-2,-5,10,-3);
-    ofLine(10,-3,-10,6);
-    ofLine(-10,6,-2,-5);
-    
-    ofLine(-10,6,3,-4);
+    ofLine(-10,6,0, 3,-4,20);
+    ofLine(3,-4,20, -2, -5,15);
+    ofLine(3,-4,20, 10,-3,10);
 
     ofPopMatrix();
 }

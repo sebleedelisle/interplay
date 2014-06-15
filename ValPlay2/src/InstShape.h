@@ -22,7 +22,7 @@ public:
     // Properties
     ofVec3f pos;
     ofVec3f vel;
-	
+	ofVec3f rotationAxis;
   
     
     int drag;
@@ -31,6 +31,7 @@ public:
     int rotation;
     int size;
     int scale;
+    int spin;
    
     ofColor colour;
    int instrument;

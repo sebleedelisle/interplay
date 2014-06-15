@@ -19,35 +19,43 @@ void ofApp::setup(){
     
 }
 
-//need to do something to take out old ones, but this doesn't make sense to me right now. thinking :)
-// write our boolean remove function
-//bool shouldRemove(InstShape &p){
-//    if(p.pos.y > ofGetHeight() )return true;
-//    else return false;
-//}
-
 
 
 //--------------------------------------------------------------
 void ofApp::update(){
     for(int i = 0; i < drumShapes.size(); i++){
         drumShapes[i].update();
+        
+        if (drumShapes.size() > 100) {
+            drumShapes.push_front(drumShapes[i]);
+        }
     }
     
     for(int i = 0; i < bassShapes.size(); i++) {
         bassShapes[i].update();
+        
+        if (bassShapes.size() > 100) {
+            bassShapes.push_front(bassShapes[i]);
+        }
     }
     
     for(int i = 0; i < synthShapes.size(); i++) {
         synthShapes[i].update();
+        
+        if (synthShapes.size() > 100) {
+            synthShapes.push_front(synthShapes[i]);
+        }
     }
     
     for(int i = 0; i < guitarShapes.size(); i++) {
         guitarShapes[i].update();
+        
+        if (guitarShapes.size() > 100) {
+            guitarShapes.push_front(guitarShapes[i]);
+        }
     }
- 
-    //ofRemove(guitarShapes,shouldRemove);
-    
+
+   
 }
 
 //--------------------------------------------------------------
@@ -101,6 +109,7 @@ void ofApp::makeBassShapes(int num, float volume) {
         bass.vel.set(sin(angle)*speed, cos(angle)*speed, speed);
         bass.size = ofRandom(1, 12);
         bass.rotation = ofRandom(0,90);
+        bass.spin = 4;
         bass.pos.set(568,286, ofRandom(100));
         bassShapes.push_back(bass);
     };
@@ -116,6 +125,7 @@ void ofApp::makeSynthShapes(int num, float volume) {
         float speed = ofRandom(1,ofMap(volume, 0,100, 1,12));
         synth.vel.set(sin(angle)*speed, cos(angle)*speed, speed);
         synth.rotation = ofRandom(0,90);
+        synth.spin = 3;
         synth.scale = ofRandom(1.5,2.5);
         synth.pos.set(756,286, ofRandom(100));
         synthShapes.push_back(synth);
