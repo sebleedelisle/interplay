@@ -27,7 +27,7 @@ void ofApp::update(){
         drumShapes[i].update();
         
         if (drumShapes.size() > 100) {
-            drumShapes.push_front(drumShapes[i]);
+            drumShapes.pop_front();
         }
     }
     
@@ -35,7 +35,7 @@ void ofApp::update(){
         bassShapes[i].update();
         
         if (bassShapes.size() > 100) {
-            bassShapes.push_front(bassShapes[i]);
+            bassShapes.pop_front();
         }
     }
     
@@ -43,7 +43,7 @@ void ofApp::update(){
         synthShapes[i].update();
         
         if (synthShapes.size() > 100) {
-            synthShapes.push_front(synthShapes[i]);
+            synthShapes.pop_front();
         }
     }
     
@@ -51,7 +51,7 @@ void ofApp::update(){
         guitarShapes[i].update();
         
         if (guitarShapes.size() > 100) {
-            guitarShapes.push_front(guitarShapes[i]);
+            guitarShapes.pop_front();
         }
     }
 
