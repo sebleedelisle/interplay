@@ -68,7 +68,9 @@ void AudienceSection::update(){
 		
     }
 	
-	smoothedMotionLevel += (motionLevel - smoothedMotionLevel) *0.01;
+	//smoothedMotionLevel += (motionLevel - smoothedMotionLevel) *0.01;
+	smoothedMotionLevel*=0.995;
+	smoothedMotionLevel += (motionLevel*0.005);
 	
 }
 
@@ -81,9 +83,12 @@ void AudienceSection :: draw() {
 	ofEnableAlphaBlending();
 	ofNoFill();
     
-	ofSetColor(255,255,255,0.4);
-	unwarped.draw(area);
-//	
+	ofPushMatrix();
+	ofScale(0.2,0.2);
+	unwarped.draw(abletonChannel*(unwarped.width+10), 0);
+	ofPopMatrix();
+	
+	//
 //	ofSetColor(255,0,255);
 //	for(int i = 0; i<warpPoints.size(); i++) {
 //		

@@ -36,7 +36,9 @@ class ofApp : public ofBaseApp {
     cv::Scalar diffMean;
     float smoothedMean;
     int motionBand;
-    int currentScene; 
+    int currentScene;
+	
+	ofImage audiencePreview; 
 
     
 };
