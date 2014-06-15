@@ -27,6 +27,11 @@ AudienceSection::AudienceSection() {
     fillColours.push_back(ofColor(35,121,172,255));
     fillColours.push_back(ofColor(229,49,35,255));
     
+    instrumentNames.push_back("DRUMS");
+    instrumentNames.push_back("BASS");
+    instrumentNames.push_back("SYNTH");
+    instrumentNames.push_back("GUITAR");
+    
 }
 
 
@@ -77,6 +82,12 @@ void AudienceSection::update(){
 	//smoothedMotionLevel += (motionLevel - smoothedMotionLevel) *0.01;
 	smoothedMotionLevel*=0.995;
 	smoothedMotionLevel += (motionLevel*0.005);
+    
+    
+    //load type for our labels
+    labelFont.loadFont("Variable", 16, true, true);
+	labelFont.setLetterSpacing(1);
+    labelFont.setSpaceSize(.4);
 	
 }
 
@@ -84,7 +95,7 @@ void AudienceSection::update(){
 
 
 void AudienceSection :: draw() {
-	
+ 	
 	ofPushStyle();
 	ofEnableAlphaBlending();
 	ofNoFill();
@@ -150,6 +161,29 @@ void AudienceSection :: draw() {
 	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
 	ofPopMatrix();
 	
+    
+    //draw labels
+    
+    
+    float labelX = (200*abletonChannel);
+    float labelY = 100;
+    //box
+    ofSetColor(fillColours[abletonChannel]);
+    int boxWidth = 150;
+    int boxHeight = 30;
+    ofRect(labelX,labelY, boxWidth, 30);
+    
+    //text
+    ofPushMatrix();
+    ofTranslate(labelX,labelY);
+    ofSetColor(255,255,255);
+    string message = instrumentNames[abletonChannel];
+    float halfWidth = labelFont.stringWidth(message)/2;
+    float halfHeight = labelFont.stringHeight(message)/2;
+    labelFont.drawString(message, (boxWidth/2 - halfWidth), (boxHeight/2)+halfHeight);
+
+    ofPopMatrix();
+    
 	
 	ofPopStyle();
 }

@@ -68,6 +68,12 @@ void ofApp::setup(){
 	}
 	
 	audiencePreview.loadImage("img/FPORoom.jpg");
+    
+ 
+    
+   
+    
+    
  
 }
 
@@ -112,7 +118,7 @@ void ofApp::update(){
 	for(int i = 0; i<audienceSections.size(); i++) {
 		audienceSections[i].update();
 	}
-
+    
 }
 
 //--------------------------------------------------------------
@@ -133,8 +139,8 @@ void ofApp::draw(){
 	
 	
 
-	ableton.draw();
-	
+	ableton.draw();    
+
 	
 	/*
     float motionLevel = ofClamp(diffMean[0],0,1);
@@ -159,6 +165,7 @@ void ofApp::draw(){
     
 	*/
 }
+
 
 
 //--------------------------------------------------------------

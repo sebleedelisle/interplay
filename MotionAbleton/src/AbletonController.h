@@ -55,6 +55,8 @@ class AbletonController {
 	float beatProgress;
 	
 	bool barTriggered;
+    
+    
 	
 
 

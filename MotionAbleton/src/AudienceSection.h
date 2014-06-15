@@ -42,5 +42,7 @@ class AudienceSection {
 	int numScenes;
     
     vector<ofColor> fillColours;
-
+    vector<string> instrumentNames;
+    ofTrueTypeFont	labelFont;
+    
 };
