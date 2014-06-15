@@ -22,20 +22,12 @@ AudienceSection::AudienceSection() {
 	motionLevelMin = 2;
 	motionLevelMax = 10;
     
-    fillColours.push_back(ofColor(255,206,39,255));
-    fillColours.push_back(ofColor(124,206,248,255));
-    fillColours.push_back(ofColor(35,121,172,255));
-    fillColours.push_back(ofColor(229,49,35,255));
-    
-    instrumentNames.push_back("DRUMS");
-    instrumentNames.push_back("BASS");
-    instrumentNames.push_back("SYNTH");
-    instrumentNames.push_back("GUITAR");
+
     
 }
 
 
-void AudienceSection::init(int channel, ofRectangle audienceArea, vector<ofPoint> srcMotionPoints) {
+void AudienceSection::init(int channel, ofRectangle audienceArea, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour) {
 	
 	abletonChannel = channel;
 	
@@ -44,7 +36,8 @@ void AudienceSection::init(int channel, ofRectangle audienceArea, vector<ofPoint
 	}
 	
 	area = audienceArea;
-	
+	name = instrumentName;
+    colour = instrumentColour;
 
 }
 
@@ -85,7 +78,8 @@ void AudienceSection::update(){
     
     
     //load type for our labels
-    labelFont.loadFont("Variable", 16, true, true);
+    //labelFont.loadFont("Variable", 16, true, true);
+	labelFont.loadFont("Futura", 16, true, true);
 	labelFont.setLetterSpacing(1);
     labelFont.setSpaceSize(.4);
 	
@@ -138,13 +132,13 @@ void AudienceSection :: draw() {
 	
 	
     //outline of each channel
-  	ofSetColor(fillColours[abletonChannel]);
+  	ofSetColor(colour);
     ofRect(0,0,rect.width, rect.height);
 	
   
 	ofFill();
 	
-   ofSetColor(fillColours[abletonChannel].r, fillColours[abletonChannel].g, fillColours[abletonChannel].b,100);
+   ofSetColor(colour.r, colour.g, colour.b,100);
     
  
 	ofSetLineWidth(4);
@@ -153,26 +147,40 @@ void AudienceSection :: draw() {
 	ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
     
 	
-	  ofSetColor(fillColours[abletonChannel]);
-	ofRect(0,  (currentScene * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
+    ofSetColor(colour);
+	ofRect(0,  0, rect.width, (rect.height/numScenes));
 
 	ofSetColor(255,255,255);
 	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
 	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
+    
+    //box
+    ofSetColor(colour);
+    int boxWidth = area.width;
+    int boxHeight = 60;
+    ofTranslate(0,rect.height,0);
+    ofScale(1,-1);
+
+    ofRotateX(-70);
+    ofTranslate(0,-boxHeight);
+    ofRect(0, 0, boxWidth, boxHeight);
+    
+    ofSetColor(255,255,255);
+    string message = name;
+    float halfWidth = labelFont.stringWidth(message)/2;
+    float halfHeight = labelFont.stringHeight(message)/2;
+    labelFont.drawString(message, (boxWidth/2 - halfWidth), (boxHeight/2)+halfHeight);
+    
 	ofPopMatrix();
 	
     
     //draw labels
     
     
-    float labelX = (200*abletonChannel);
-    float labelY = 100;
-    //box
-    ofSetColor(fillColours[abletonChannel]);
-    int boxWidth = 150;
-    int boxHeight = 30;
-    ofRect(labelX,labelY, boxWidth, 30);
-    
+    //float labelX = (200*abletonChannel);
+    //float labelY = 100;
+
+    /*
     //text
     ofPushMatrix();
     ofTranslate(labelX,labelY);
@@ -183,7 +191,7 @@ void AudienceSection :: draw() {
     labelFont.drawString(message, (boxWidth/2 - halfWidth), (boxHeight/2)+halfHeight);
 
     ofPopMatrix();
-    
+    */
 	
 	ofPopStyle();
 }

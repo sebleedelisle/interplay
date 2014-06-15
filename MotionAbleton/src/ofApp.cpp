@@ -20,7 +20,7 @@ void ofApp::setup(){
     
 	float imageScale = 0.5;
 	
-    grabber.setDeviceID(1);
+  //  grabber.setDeviceID(1);
     grabber.initGrabber(1280*imageScale, 720*imageScale, 30);
 	//grabber.videoSettings();
     
@@ -43,6 +43,17 @@ void ofApp::setup(){
 	AudienceSection& audience2 = audienceSections[1];
 	AudienceSection& audience3 = audienceSections[2];
 	AudienceSection& audience4 = audienceSections[3];
+    
+    vector<ofColor> fillColours;
+    fillColours.push_back(ofColor(255,206,39,255));
+    fillColours.push_back(ofColor(124,206,248,255));
+    fillColours.push_back(ofColor(35,121,172,255));
+    fillColours.push_back(ofColor(229,49,35,255));
+    vector<string> instrumentNames;
+    instrumentNames.push_back("DRUMS");
+    instrumentNames.push_back("BASS");
+    instrumentNames.push_back("SYNTH");
+    instrumentNames.push_back("GUITAR");
 
 	
 	for(int i = 0; i<4; i++) {
@@ -63,7 +74,7 @@ void ofApp::setup(){
 		
 		for(int i = 0; i<points.size(); i++) points[i]*=imageScale;
 		
-		audienceSections[i].init(i,rect, points);
+		audienceSections[i].init(i,rect, points, instrumentNames[i], fillColours[i]);
 		
 	}
 	

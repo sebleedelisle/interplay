@@ -17,7 +17,7 @@ class AudienceSection {
 	
 	AudienceSection();
 
-	void init(int channel, ofRectangle area, vector<ofPoint> srcMotionPoints);
+	void init(int channel, ofRectangle area, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour);
 	void update();
 	void draw();
 	
@@ -41,8 +41,8 @@ class AudienceSection {
     int currentScene;
 	int numScenes;
     
-    vector<ofColor> fillColours;
-    vector<string> instrumentNames;
+    ofColor colour;
+    string name;
     ofTrueTypeFont	labelFont;
     
 };
