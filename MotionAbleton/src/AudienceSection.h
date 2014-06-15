@@ -31,7 +31,9 @@ class AudienceSection {
 	
 	cv::Scalar diffMean;
 
-	float motionLevel; 
+	float motionLevel;
+	float motionLevelMin;
+	float motionLevelMax;
 	float smoothedMotionLevel;
 
 	int abletonChannel; 

@@ -27,6 +27,8 @@ void InstShape::update(){
 }
 
 void InstShape::render(){
+	
+	ofPushStyle();
     //for all shapes
     ofNoFill();
     ofSetLineWidth(1);
@@ -55,13 +57,22 @@ void InstShape::render(){
         break;
         
     };
-    
+    ofPopStyle();
     
 }
 
 void InstShape::drawDrums() {
     ofSetColor(255,206,39);
-    ofCircle(pos.x, pos.y, pos.z, size);
+	ofPushMatrix();
+	ofTranslate(pos.x, pos.y, pos.z);
+    ofCircle(0,0,0, size);
+	ofRotateX(90);
+	ofCircle(0,0,0, size);
+	ofRotateY(90);
+	ofCircle(0,0,0, size);
+
+	ofPopMatrix();
+	
 }
 
 

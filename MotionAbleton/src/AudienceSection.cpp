@@ -16,6 +16,11 @@ AudienceSection::AudienceSection() {
 
 	
 	numScenes = 4;
+	motionLevel = 0;
+	smoothedMotionLevel = 0;
+	motionLevelMin = 2;
+	motionLevelMax = 10;
+	
 }
 
 
@@ -44,9 +49,17 @@ void AudienceSection::update(){
 	
 	// you can only do math between Scalars,
 	// but it's easy to make a Scalar from an int (shown here)
-	diffMean *= Scalar(0.1);
-		
-	motionLevel = ofClamp(diffMean[0],0,1);
+	//diffMean *= Scalar(0.1);
+	//motionLevel = ofClamp(diffMean[0],0,1);
+	motionLevel = diffMean[0];
+	
+//	if(motionLevel>motionLevelMax) motionLevelMax+=(motionLevel - motionLevelMax) *0.1;
+//	if(motionLevel<motionLevelMin) motionLevelMin+=(motionLevel - motionLevelMin) *0.1;
+//	motionLevelMax*=0.99;
+//	motionLevelMin*=1.01;
+	
+	motionLevel = ofMap(motionLevel,motionLevelMin, motionLevelMax, 0,1,true);
+	
     
     int newmotionband = (smoothedMotionLevel * 4.0f);
     if(newmotionband!=motionBand) {
@@ -102,7 +115,8 @@ void AudienceSection :: draw() {
 	ofSetColor(255,255,255);
 	
 
-	ofRect(0,smoothedMotionLevel*rect.height, rect.width,5);
+	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
+	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
 	ofPopMatrix();
 	
 	

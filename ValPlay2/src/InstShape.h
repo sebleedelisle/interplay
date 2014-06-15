@@ -22,6 +22,7 @@ public:
     // Properties
     ofVec3f pos;
     ofVec3f vel;
+	
   
     
     int drag;
