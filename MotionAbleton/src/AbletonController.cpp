@@ -18,7 +18,6 @@ AbletonController * AbletonController::instance() {
 
 void AbletonController::init(string host, int portnumber) {
     
-    
  	//Client side
 	clientDestination = host;
 	clientSendPort = portnumber;
@@ -28,16 +27,19 @@ void AbletonController::init(string host, int portnumber) {
 	clientReceiver.setup(clientRecvPort);
     
     playing = false;
-    
+    barTriggered = false;
+	beatLength = 60000/120; // defaults to 120bpm
+	lastBeatTime = -1;
+	beatProgress = 0;
     
     masterMeter = 0;
-    
     
 }
 
 void AbletonController::update() {
     
-    
+	barTriggered = false;
+	
     
 	// check for waiting messages
 	while(clientReceiver.hasWaitingMessages()){
@@ -51,7 +53,9 @@ void AbletonController::update() {
 		if(m.getAddress() == "/live/master/meter"){
             
             if(m.getArgAsInt32(0) == 0 ) {
-                masterMeter = m.getArgAsFloat(1);
+				
+				masterMeter =m.getArgAsFloat(1);
+				
             }
             
 		} else if(m.getAddress() == "/live/track/meter"){
@@ -69,9 +73,19 @@ void AbletonController::update() {
             else if(m.getArgAsInt32(1) == 1) playing = false;
             
 		} else if(m.getAddress() == "/live/beat"){
-            int beatnum = m.getArgAsInt32(0);
+            currentBeatNum = m.getArgAsInt32(0);
             
-            //if(beatnum%4 == 0 ) currentScene = motionBand;
+            if(currentBeatNum%4 == 0 ) barTriggered = true;
+			
+			if(lastBeatTime>=0) {
+				long thisBeatTime = ofGetElapsedTimeMillis();
+				
+				beatLength = thisBeatTime - lastBeatTime;
+				lastBeatTime = thisBeatTime;
+				
+				
+				
+			} else lastBeatTime = ofGetElapsedTimeMillis();
             
             
 		}
@@ -84,13 +98,17 @@ void AbletonController::update() {
 	if(ofGetFrameNum() == 60){
 		clientReceiver.setup(clientRecvPort);
 	}
-   
+	
+	if(lastBeatTime>0) beatProgress = (float)(ofGetElapsedTimeMillis() - lastBeatTime )/(float)beatLength;
+	//latency = ofGetMouseY();
 }
 
 
 void AbletonController::draw() {
     
+	ofPushStyle();
     ofSetColor(255);
+	/*
     ofRect(0,0,masterMeter*ofGetWidth(),10);
     
     for(int i = 0; i<trackLevels.size(); i++) {
@@ -98,9 +116,13 @@ void AbletonController::draw() {
         ofRect(0, i*20 + 20, trackLevels[i]*ofGetWidth(), 10);
         
     }
-
-    
-    
+	 */
+    ofNoFill();
+	ofRect(500,0,20,20);
+	ofFill();
+	ofRect(500,0,20*beatProgress, 20);
+	
+    ofPopStyle();
 }
 
 //--------------------------------------------------------------
@@ -135,7 +157,7 @@ string AbletonController::getOscMsgAsString(ofxOscMessage m){
 void AbletonController::playClip(int num, int part){
     
     sendMessage("/live/play/clipslot", part,num);
-
+	playing = true;
 
 }
 
@@ -155,13 +177,19 @@ void AbletonController::sendMessage(string msg, int p1, int p2) {
 	
 }
 
-void AbletonController::exit() {
-
-
+void AbletonController::stopAll() {
+	
+	
     ofxOscMessage m;
     
     m.setAddress("/live/stop");
     clientSender.sendMessage(m);
+	
+	
+}
 
-
+void AbletonController::exit() {
+	
+	stopAll();
+	
 }

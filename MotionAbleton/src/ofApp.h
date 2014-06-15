@@ -27,8 +27,8 @@ class ofApp : public ofBaseApp {
     
 	int thresholdLevel; 
     AbletonController& ableton;
-	AudienceSection audience1;
-	
+	vector <AudienceSection> audienceSections;
+		
     ofVideoGrabber grabber;
     ofImage current;
     ofPixels previous;

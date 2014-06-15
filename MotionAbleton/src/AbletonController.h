@@ -24,6 +24,7 @@ class AbletonController {
     void draw(); 
     
     void playClip(int num, int part);
+	void stopAll(); 
 
     void sendMessage(string msg);
     void sendMessage(string msg,	int p1, int p2);
@@ -45,6 +46,15 @@ class AbletonController {
     vector<float> trackLevels;
     bool playing;
 
+	
+	int currentBeatNum;
+	
+	int beatLength;
+	long lastBeatTime;
+	int latency;
+	float beatProgress;
+	
+	bool barTriggered;
 	
 
 

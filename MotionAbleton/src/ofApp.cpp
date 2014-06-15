@@ -14,19 +14,61 @@ void ofApp::setup(){
 	ofBackground(150);
 
 	// Enable some logging information
-	ofSetLogLevel(OF_LOG_VERBOSE);
+	//ofSetLogLevel(OF_LOG_VERBOSE);
 
     ableton.init("localhost");
     
+	float imageScale = 0.5;
+	
     grabber.setDeviceID(1);
-    grabber.initGrabber(1280, 720, 30);
+    grabber.initGrabber(1280*imageScale, 720*imageScale, 30);
 	//grabber.videoSettings();
     
 	imitate(current, grabber);
-    imitate(previous, grabber);
-    imitate(diff, grabber);
+	imitate(previous, grabber);
+	imitate(diff, grabber);
 	
-    thresholdLevel = 40;
+//	current.allocate(1280, 720*0.5, OF_IMAGE_COLOR);
+//	imitate(previous, current);
+//	imitate(diff, current);
+	
+    thresholdLevel = 0;
+	
+	audienceSections.push_back(AudienceSection());
+	audienceSections.push_back(AudienceSection());
+	audienceSections.push_back(AudienceSection());
+	audienceSections.push_back(AudienceSection());
+
+	AudienceSection& audience1 = audienceSections[0];
+	AudienceSection& audience2 = audienceSections[1];
+	AudienceSection& audience3 = audienceSections[2];
+	AudienceSection& audience4 = audienceSections[3];
+
+	
+	for(int i = 0; i<4; i++) {
+		float x = ofMap(i, 0, 3, ofGetWidth()*0.15, ofGetWidth()*0.85);
+		float y = ofGetHeight()/2;
+		
+		float halfwidth = 150;
+		float halfheight = 300;
+		
+		
+		ofRectangle rect(x-halfwidth, y - halfheight, halfwidth*2, halfheight*2);
+		
+		vector<ofPoint> points;
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.6), ofGetHeight()*0.2));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.4, ofGetWidth()*0.8), ofGetHeight()*0.2));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.9), ofGetHeight()*0.8));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.1, ofGetWidth()*0.8), ofGetHeight()*0.8));
+		
+		for(int i = 0; i<points.size(); i++) points[i]*=imageScale;
+		
+		audienceSections[i].init(i,rect, points);
+		
+	}
+	
+	//audience1.init(
+	
     
 }
 
@@ -42,6 +84,8 @@ void ofApp::update(){
         
         // copy the new image into the current image
         copy(grabber.getPixelsRef(), current);
+		
+		current.mirror(false, true);
         
         // difference blend between the two images to highlight the
         // changes between frames
@@ -59,11 +103,16 @@ void ofApp::update(){
 		// you can only do math between Scalars,
 		// but it's easy to make a Scalar from an int (shown here)
 		diffMean *= Scalar(0.1);
+		
+		for(int i = 0; i<audienceSections.size(); i++) {
+			audienceSections[i].updateMotionImage(diff);
+		}
         
         
     }
-    audience1.update(diff);
-    
+	for(int i = 0; i<audienceSections.size(); i++) {
+		audienceSections[i].update();
+	}
 
 }
 
@@ -72,12 +121,20 @@ void ofApp::draw(){
     ofFill();
     ofBackground(0);
 	ofSetColor(255);
-      grabber.draw(0,0, 1280, 720);
+      current.draw(0,0, 1280, 720);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
     diff.draw(0,0, 1280, 720);
     ofDisableBlendMode();
 	
-	audience1.draw();
+	for(int i = 0; i<audienceSections.size(); i++) {
+		audienceSections[i].draw();
+	}
+	
+	
+	
+
+	ableton.draw();
+	
 	
 	/*
     float motionLevel = ofClamp(diffMean[0],0,1);

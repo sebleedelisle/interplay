@@ -15,18 +15,29 @@ class AudienceSection {
 
 	public :
 	
+	AudienceSection();
 
-
-	void update(ofImage& motionImage);
+	void init(int channel, ofRectangle area, vector<ofPoint> srcMotionPoints);
+	void update();
 	void draw();
+	
+	void updateMotionImage(ofImage& motionImage); 
 
+	
+	ofImage unwarped;
+	vector<cv::Point2f> warpPoints;
+	
+	ofRectangle area; 
+	
 	cv::Scalar diffMean;
 
 	float motionLevel; 
-	float smoothedMean;
+	float smoothedMotionLevel;
 
+	int abletonChannel; 
 	int motionBand;
     int currentScene;
+	int numScenes;
 
 
 };
