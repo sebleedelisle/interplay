@@ -49,7 +49,7 @@ void ofApp::setup(){
 		float x = ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.8);
 		float y = ofGetHeight()/2;
 		
-		float halfwidth = (ofGetWidth()*0.6/6)-2;
+		float halfwidth = (ofGetWidth()*0.6/6)-4;
 		float halfheight = 320;
 		
 		
