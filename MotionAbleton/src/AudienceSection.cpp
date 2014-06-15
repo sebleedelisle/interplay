@@ -120,15 +120,16 @@ void AudienceSection :: draw() {
 	ofRect(0,0,rect.width, rect.height);
 	
 	
-	ofSetColor(200,0,0,100);
-    ofFill();
-	
-    if((ofGetElapsedTimeMillis() % 400 < 200) && (currentScene!=motionBand)) ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
+    
+	ofFill();
+	ofSetColor(100,0,0,100);
+	ofSetLineWidth(4);
+   // if((ofGetElapsedTimeMillis() % 400 < 200) && (currentScene!=motionBand))
+	ofRect(0, (motionBand * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
 	
 	ofSetColor(255,0,0,100);
 	ofRect(0,  (currentScene * (rect.height/numScenes)), rect.width, (rect.height/numScenes));
-	
-	
+
 	ofSetColor(255,255,255);
 	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
 	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
