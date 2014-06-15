@@ -22,6 +22,12 @@ AudienceSection::AudienceSection() {
 	motionLevelMin = 2;
 	motionLevelMax = 10;
     
+    //load type for our labels
+    labelFont.loadFont("Variable", 24, true, true);
+	//labelFont.loadFont("Futura", 16, true, true);
+	labelFont.setLetterSpacing(1);
+    labelFont.setSpaceSize(.4);
+
 
     
 }
@@ -77,12 +83,7 @@ void AudienceSection::update(){
 	smoothedMotionLevel += (motionLevel*0.005);
     
     
-    //load type for our labels
-    //labelFont.loadFont("Variable", 16, true, true);
-	labelFont.loadFont("Futura", 16, true, true);
-	labelFont.setLetterSpacing(1);
-    labelFont.setSpaceSize(.4);
-	
+ 	
 }
 
 
