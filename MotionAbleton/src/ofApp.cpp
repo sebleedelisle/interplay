@@ -68,8 +68,8 @@ void ofApp::setup(){
 	}
 	
 	//audience1.init(
-	
-    
+	audiencePreview.loadImage("img/FPORoom.jpg");
+ 
 }
 
 //--------------------------------------------------------------
@@ -121,7 +121,8 @@ void ofApp::draw(){
     ofFill();
     ofBackground(0);
 	ofSetColor(255);
-      current.draw(0,0, 1280, 720);
+	current.draw(0,0, 1280, 720);
+	audiencePreview.draw(0,0,1280,720);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
     diff.draw(0,0, 1280, 720);
     ofDisableBlendMode();

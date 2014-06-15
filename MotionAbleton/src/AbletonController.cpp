@@ -75,7 +75,7 @@ void AbletonController::update() {
 		} else if(m.getAddress() == "/live/beat"){
             currentBeatNum = m.getArgAsInt32(0);
             
-            if(currentBeatNum%4 == 0 ) barTriggered = true;
+            if(currentBeatNum%16 == 0 ) barTriggered = true;
 			
 			if(lastBeatTime>=0) {
 				long thisBeatTime = ofGetElapsedTimeMillis();
