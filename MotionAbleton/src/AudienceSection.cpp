@@ -30,7 +30,7 @@ AudienceSection::AudienceSection() {
     labelFont.setSpaceSize(.4);
 	
 	updateCount = 0;
- 
+	
 }
 
 
@@ -51,6 +51,8 @@ void AudienceSection::init(int tracknum, ofRectangle audienceArea, vector<ofPoin
 	
 	ableton.sendMessage("/live/play/clipslot", abletonTrack, 0);
 	if(abletonTrack2>=0) ableton.sendMessage("/live/play/clipslot", abletonTrack2, 0);
+	ableton.sendMessage("/live/mute", abletonTrack, 0);
+	if(abletonTrack2>=0) ableton.sendMessage("/live/mute", abletonTrack2, 0);
 
 	ableton.sendMessage("/live/stop");
 	
@@ -106,14 +108,15 @@ void AudienceSection::update(){
  	
     int newmotionband = (smoothedMotionLevel * numClips);
     if(newmotionband!=motionBand) {
-        motionBand = newmotionband;
-        if(ableton.isPlaying()) {
+        
+        if(ableton.isPlaying() && enabled) {
+			motionBand = newmotionband;
 			ableton.playClip(motionBand, abletonTrack);
 			if(abletonTrack2>=0) ableton.playClip(motionBand, abletonTrack2);
 		}
     }
 	
-	currentClip = ableton.getPlayingClipForTrack(abletonTrack);
+	if(enabled) currentClip = ableton.getPlayingClipForTrack(abletonTrack);
 	if(currentClip < 0) currentClip = 0;
 
 }
@@ -125,6 +128,9 @@ void AudienceSection :: draw() {
 	
 	AbletonController& ableton = *AbletonController::instance();
 
+	float angle = 50.0f;
+	
+	
 	ofPushStyle();
 	ofEnableAlphaBlending();
 	
@@ -136,18 +142,8 @@ void AudienceSection :: draw() {
 	unwarped.draw(abletonTrack*(unwarped.width+10), 0);
 	ofPopMatrix();
 	
-	//
-//	ofSetColor(255,0,255);
-//	for(int i = 0; i<warpPoints.size(); i++) {
-//		
-//		ofPoint p(warpPoints[i].x, warpPoints[i].y);
-//		
-//		ofCircle(p, 2);
-//		ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
-//		
-//		
-//	}
-    
+	
+	   
 	//rect defining the channel
     ofRectangle rect = area;
 	
@@ -155,11 +151,11 @@ void AudienceSection :: draw() {
 	
 	ofPushMatrix();
     //translate to middle
-	ofTranslate(0,28);
-	//cout << ofGetMouseY() - ofGetHeight()/2 << endl;
+	ofTranslate(0,355, 20);
+	//cout << ofGetMouseY() << endl;
 	ofTranslate(rect.getCenter());
     //flatten it down a bit, perspectivy
-	ofRotateX(70);
+	ofRotateX(angle);
     //translate to bottom left
 	ofTranslate(-rect.width/2,rect.height/2);
 	//ofTranslate(0,-50,-50);
@@ -175,12 +171,12 @@ void AudienceSection :: draw() {
 	ofFill();
 	ofRectangle block;
   
-    float thickness = 15;
+    float thickness = 5;
  
 	//ofSetLineWidth(4);
     
     if((ofGetElapsedTimeMillis()%300>150) && (currentClip!=motionBand)) {
-		ofSetColor(colour.r, colour.g, colour.b,100);
+		ofSetColor(colour.r, colour.g, colour.b,50);
 
 		block.set(0,motionBand * (rect.height/numClips), rect.width, rect.height/numClips);
 		ofRect(block);
@@ -223,25 +219,30 @@ void AudienceSection :: draw() {
 	ofPopMatrix();
 
 	ofSetColor(255,255,255);
-	ofRect(0,smoothedMotionLevel*rect.height, rect.width/2,5);
-	ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
+	ofRect(0,(smoothedMotionLevel*rect.height) - 5, rect.width,10);
+	//ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
     
     //box
     ofSetColor(colour);
+	if(!enabled) ofSetColor(colour*0.3);
     int boxWidth = area.width;
     int boxHeight = 60;
 	float volume = ableton.getLevelForTrack(abletonTrack)*100 + ableton.getLevelForTrack(abletonTrack2)*100;
     ofTranslate(0,rect.height,0);
     ofScale(1,-1);
 
-    ofRotateX(-70);
+    ofRotateX(-angle);
     ofTranslate(0,-boxHeight);
     ofRect(0, 0, boxWidth, boxHeight);
-	ofSetColor(colour, 100);
-	ofRect(0,0,boxWidth, -volume);
-    
+	if(enabled) {
+		ofSetColor(colour, 100);
+		ofRect(0,0,boxWidth, -volume);
+    }
+	
 	// label
     ofSetColor(255,255,255);
+	if(!enabled) ofSetColor(0);
+
     string message = name;
     float halfWidth = labelFont.stringWidth(message)/2;
     float halfHeight = labelFont.stringHeight(message)/2;
@@ -249,8 +250,45 @@ void AudienceSection :: draw() {
     
 	ofPopMatrix();
 	
-    
+	
+	
+	/*
+	 // TO SHOW MOTION AREAS
+	ofPushMatrix();
+	
+	
+	ofNoFill();
+	ofScale(2,2);
+	ofSetColor(colour);
+	ofDisableBlendMode();
+	
+	for(int i = 0; i<warpPoints.size(); i++) {
+		
+		ofPoint p(warpPoints[i].x, warpPoints[i].y);
+		
+		ofCircle(p, 2);
+		ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
+		
+		
+	}
+	ofBeginShape();
+	for(int i = 0; i<=warpPoints.size(); i++) {
+		
+		ofPoint p(warpPoints[i%4].x, warpPoints[i%4].y);
+		
+		ofVertex(p);
+		//ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
+		
+		
+	}
+	ofEndShape();
+	ofPopMatrix();
+*/
+	
+
 	ofPopStyle();
+	
+	
 }
 
 
@@ -260,5 +298,33 @@ void AudienceSection::updateMotionImage(ofImage &motionImage) {
 	unwarpPerspective(motionImage, unwarped, warpPoints);
 	unwarped.update();
 
+}
+
+bool AudienceSection::toggleEnabled() {
+	
+	AbletonController& ableton = *AbletonController::instance();
+
+	enabled = !enabled;
+	if(!enabled) {
+		ableton.playClip(0,abletonTrack);
+		if(abletonTrack2>=0) ableton.playClip(0, abletonTrack2);
+		ableton.sendMessage("/live/mute", abletonTrack, 1);
+		if(abletonTrack2>=0) ableton.sendMessage("/live/mute", abletonTrack2, 1);
+		
+		currentClip = 0;
+		motionBand = 0;
+		smoothedMotionLevel = 0;
+		motionLevel = 0;
+		
+		
+		
+	} else {
+		ableton.sendMessage("/live/mute", abletonTrack, 0);
+		if(abletonTrack2>=0) ableton.sendMessage("/live/mute", abletonTrack2, 0);
+	
+		
+	}
+	
+	return enabled;
 
 }

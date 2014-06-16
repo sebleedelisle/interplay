@@ -55,19 +55,23 @@ void ofApp::setup(){
 		
 		float halfwidth = (ofGetWidth()*0.5/6)-4;
 		float halfheight = 320;
+		 
 		
+		ofRectangle rect(x-halfwidth, y - (halfheight*1.5), halfwidth*2, halfheight*1);
 		
-		ofRectangle rect(x-halfwidth, y - halfheight, halfwidth*2, halfheight*2);
-		
+		// warp points
 		vector<ofPoint> points;
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.6), ofGetHeight()*0.2));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.4, ofGetWidth()*0.8), ofGetHeight()*0.2));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.9), ofGetHeight()*0.8));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.1, ofGetWidth()*0.8), ofGetHeight()*0.8));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.24, ofGetWidth()*0.63), ofGetHeight()*0.40));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.37, ofGetWidth()*0.76), ofGetHeight()*0.40));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.15, ofGetWidth()*1.2), ofGetHeight()*0.87));
+		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*-0.2, ofGetWidth()*0.86), ofGetHeight()*0.87));
 		
 		for(int i = 0; i<points.size(); i++) points[i]*=imageScale;
 		
-		audienceSections[i].init(i,rect, points, instrumentNames[i], fillColours[i], i+4);
+		int secondTrack = -1;
+		if(i==0) secondTrack = 4;
+		else if(i==3) secondTrack = 5;
+		audienceSections[i].init(i,rect, points, instrumentNames[i], fillColours[i], secondTrack);
 		
 	}
 	
@@ -130,16 +134,20 @@ void ofApp::draw(){
 	
 	outputFbo.begin();
 	
-	//ofSetupScreenPerspective(1280,720,100);
+	ofSetupScreenPerspective(1280,720,100);
     
 	
 	ofFill();
     ofBackground(0);
 	ofSetColor(255);
 	current.draw(0,0, 1280, 720);
+	ofSetColor(100);
 	audiencePreview.draw(0,0,1280,720);
+	
+	ofSetColor(120);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
     diff.draw(0,0, 1280, 720);
+	ofSetColor(255);
     ofDisableBlendMode();
 	
 	for(int i = 0; i<audienceSections.size(); i++) {
@@ -187,7 +195,7 @@ void ofApp::initGui() {
 	
 	appGui.load();
 	for(int i = 0; i<audienceSections.size(); i++) {
-		audienceSections[i].enabled = false;
+		audienceSections[i].enabled = true;
 		audienceSections[i].motionLevelRaw = 0;
 	}
 	
@@ -209,31 +217,20 @@ void ofApp::keyPressed(int key){
 		ofToggleFullscreen();
 		
 	}
-	/*
+	
+	if(key=='\t') {
+		appGui.toggleVisible();
+		
+	}
     else if(key == '1') {
-        m.setAddress("/live/play/clipslot");
-        m.addIntArg(0);
-        m.addIntArg(0);
-        clientSender.sendMessage(m);
+        audienceSections[0].toggleEnabled();
+    } else if(key == '2') {
+        audienceSections[1].toggleEnabled();
+    } else if(key == '3') {
+        audienceSections[2].toggleEnabled();    
+    } else if(key == '4') {
+        audienceSections[3].toggleEnabled();
     }
-    else if(key == '2') {
-        m.setAddress("/live/play/clipslot");
-        m.addIntArg(0);
-        m.addIntArg(1);
-        clientSender.sendMessage(m);
-    }
-    else if(key == '3') {
-        m.setAddress("/live/play/clipslot");
-        m.addIntArg(0);
-        m.addIntArg(2);
-        clientSender.sendMessage(m);
-    }
-    else if(key == '4') {
-        m.setAddress("/live/play/clipsldi di	ot");
-        m.addIntArg(0);
-        m.addIntArg(3);
-        clientSender.sendMessage(m);
-    }*/
      
     
 
