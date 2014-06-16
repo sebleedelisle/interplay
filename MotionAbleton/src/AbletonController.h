@@ -17,21 +17,32 @@ class AbletonController {
 	static AbletonController * ableton;
 
 	
-    void init(string host, int portnumber = 9000);
+    void init(string host);
     
     void update();
     
     void draw(); 
     
     void playClip(int num, int part);
-	void stopAll(); 
-
+	void stopAll();
+	void playFromBeginning();
+	
+	bool togglePlaying();
+    
     void sendMessage(string msg);
+    void sendMessage(string msg,	int p1);
     void sendMessage(string msg,	int p1, int p2);
     
     void exit(); 
+
+	int getPlayingClipForTrack(int track);
+	float getProgressForTrack(int track);
+    float getLevelForTrack(int track);
     
-    ofxOscSender clientSender; // all-important ofxOscSender object
+	bool isPlaying() { return playing; };
+	bool isBarTriggered() {return barTriggered; };
+	
+	ofxOscSender clientSender; // all-important ofxOscSender object
     string clientDestination; // IP address we're sending to
     int clientSendPort; // port we're sending to
     
@@ -44,18 +55,26 @@ class AbletonController {
     
     float masterMeter;
     vector<float> trackLevels;
-    bool playing;
-
+	
+	
+    
 	
 	int currentBeatNum;
+	
+	
+	vector<int> trackClips;
+	vector<float> trackProgress;
 	
 	int beatLength;
 	long lastBeatTime;
 	int latency;
 	float beatProgress;
 	
+	
+	private:
 	bool barTriggered;
-    
+    bool playing;
+
     
 	
 

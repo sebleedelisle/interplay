@@ -9,28 +9,20 @@ using namespace cv;
 void ofApp::setup(){
 	ofSetFrameRate(60); // run at 60 fps
 	ofSetVerticalSync(true);
+	
 
-	// set bg to a nice grey!
-	ofBackground(150);
-
-	// Enable some logging information
-	//ofSetLogLevel(OF_LOG_VERBOSE);
+	outputFbo.allocate(1280, 720, GL_RGB, 6);
 
     ableton.init("localhost");
     
 	float imageScale = 0.5;
 	
-  //  grabber.setDeviceID(1);
+    grabber.setDeviceID(1);
     grabber.initGrabber(1280*imageScale, 720*imageScale, 30);
-	//grabber.videoSettings();
-    
+   
 	imitate(current, grabber);
 	imitate(previous, grabber);
 	imitate(diff, grabber);
-	
-//	current.allocate(1280, 720*0.5, OF_IMAGE_COLOR);
-//	imitate(previous, current);
-//	imitate(diff, current);
 	
     thresholdLevel = 0;
 	
@@ -49,6 +41,7 @@ void ofApp::setup(){
     fillColours.push_back(ofColor(124,206,248,255));
     fillColours.push_back(ofColor(35,121,172,255));
     fillColours.push_back(ofColor(229,49,35,255));
+	
     vector<string> instrumentNames;
     instrumentNames.push_back("DRUMS");
     instrumentNames.push_back("BASS");
@@ -57,10 +50,10 @@ void ofApp::setup(){
 
 	
 	for(int i = 0; i<4; i++) {
-		float x = ofMap(i, 0, 3, ofGetWidth()*0.2, ofGetWidth()*0.8);
+		float x = ofMap(i, 0, 3, ofGetWidth()*0.25, ofGetWidth()*0.75);
 		float y = ofGetHeight()/2;
 		
-		float halfwidth = (ofGetWidth()*0.6/6)-4;
+		float halfwidth = (ofGetWidth()*0.5/6)-4;
 		float halfheight = 320;
 		
 		
@@ -74,14 +67,14 @@ void ofApp::setup(){
 		
 		for(int i = 0; i<points.size(); i++) points[i]*=imageScale;
 		
-		audienceSections[i].init(i,rect, points, instrumentNames[i], fillColours[i]);
+		audienceSections[i].init(i,rect, points, instrumentNames[i], fillColours[i], i+4);
 		
 	}
 	
 	audiencePreview.loadImage("img/FPORoom.jpg");
     
  
-    
+    initGui();
    
     
     
@@ -134,7 +127,13 @@ void ofApp::update(){
 
 //--------------------------------------------------------------
 void ofApp::draw(){
-    ofFill();
+	
+	outputFbo.begin();
+	
+	//ofSetupScreenPerspective(1280,720,100);
+    
+	
+	ofFill();
     ofBackground(0);
 	ofSetColor(255);
 	current.draw(0,0, 1280, 720);
@@ -147,37 +146,53 @@ void ofApp::draw(){
 		audienceSections[i].draw();
 	}
 	
-	
-	
+	ableton.draw();
 
-	ableton.draw();    
-
+	outputFbo.end();
 	
-	/*
-    float motionLevel = ofClamp(diffMean[0],0,1);
-    
-    ofNoFill();
-    smoothedMean += (motionLevel - smoothedMean) *0.06;
-    ofSetColor(0,255,255);
-    ofRect(0, 0, 640, smoothedMean*380);
-    
-    int newmotionband = (smoothedMean * 4.0f);
-    if(newmotionband!=motionBand) {
-        motionBand = newmotionband;
-        ableton.playClip(motionBand, 0);
-    }
-    
-    ofSetColor(255,255,255);
-    ofRect(0, motionBand * (380.0f/4.0f), 640, (380.0f/4.0f));
-    ofSetColor(255,0,0,40);
-    ofFill();
-    ofRect(0, currentScene * (380.0f/4.0f), 640, (380.0f/4.0f));
-    
-    
-	*/
+	outputFbo.draw(0,0);
+	
+	appGui.draw();
+
+
 }
 
-
+void ofApp::initGui() {
+	
+	ofxBaseGui::setDefaultWidth(300);
+    ofxBaseGui::setDefaultHeight(16);
+	ofxBaseGui::setDefaultSpacing(3);
+    ofxBaseGui::setDefaultElementSpacing(3);
+	ofxBaseGui::setDefaultElementIndentation(1);
+	ofxBaseGui::setDefaultTextPadding(5);
+	ofxBaseGui::setUseTTF(true);
+	
+	ofxBaseGui::loadFont("VeraMoIt.ttf",8, true);
+	
+	appGui.setup("App settings", "settings.xml");
+	appGui.setPosition(ofPoint(10,10));
+	appGui.setVisible(true);
+	appGui.add(test.set("test", false));
+	
+	for(int i = 0; i<audienceSections.size(); i++) {
+	
+		appGui.add(audienceSections[i].enabled);
+		appGui.add(audienceSections[i].motionLevelRaw);
+		
+		appGui.add(audienceSections[i].motionLevelMin);
+		appGui.add(audienceSections[i].motionLevelMax);
+	}
+	//laserGui.add(&laserManager.connectButton);
+	//laserGui.add(laserManager.parameters);
+	
+	appGui.load();
+	for(int i = 0; i<audienceSections.size(); i++) {
+		audienceSections[i].enabled = false;
+		audienceSections[i].motionLevelRaw = 0;
+	}
+	
+	
+}
 
 //--------------------------------------------------------------
 void ofApp::keyPressed(int key){
@@ -185,12 +200,15 @@ void ofApp::keyPressed(int key){
     
     if(key == ' ') {
        
-        ableton.sendMessage("/live/stop");
+//        ableton.sendMessage("/live/stop");
+		ableton.togglePlaying();
+		
     }
-    else if(key == OF_KEY_RETURN) {
-         ableton.sendMessage("/live/play");
-
-    }
+  	
+	if(key=='f') {
+		ofToggleFullscreen();
+		
+	}
 	/*
     else if(key == '1') {
         m.setAddress("/live/play/clipslot");
@@ -230,6 +248,7 @@ void ofApp::keyReleased(int key){
 void ofApp::exit() {
     
     ableton.exit();
+	appGui.save();
     
     
 }

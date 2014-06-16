@@ -16,14 +16,14 @@ AbletonController * AbletonController::instance() {
 	return ableton;
 }
 
-void AbletonController::init(string host, int portnumber) {
+void AbletonController::init(string host) {
     
  	//Client side
 	clientDestination = host;
-	clientSendPort = portnumber;
+	clientSendPort = 9000;
 	clientSender.setup(clientDestination, clientSendPort);
     
-	clientRecvPort = clientSendPort + 1;
+	clientRecvPort = 9001;
 	clientReceiver.setup(clientRecvPort);
     
     playing = false;
@@ -69,8 +69,8 @@ void AbletonController::update() {
             
 		}
         else if(m.getAddress() == "/live/play"){
-            if(m.getArgAsInt32(1) == 2) playing = true;
-            else if(m.getArgAsInt32(1) == 1) playing = false;
+            if(m.getArgAsInt32(0) == 2) playing = true;
+            else if(m.getArgAsInt32(0) == 1) playing = false;
             
 		} else if(m.getAddress() == "/live/beat"){
             currentBeatNum = m.getArgAsInt32(0);
@@ -88,10 +88,42 @@ void AbletonController::update() {
 			} else lastBeatTime = ofGetElapsedTimeMillis();
             
             
+		} else if (m.getAddress() == "/live/clip/info") {
+			int tracknum = m.getArgAsInt32(0);
+			int clipnum = m.getArgAsInt32(1);
+			int state = m.getArgAsInt32(2);
+			if(tracknum >= trackClips.size()) {
+				trackClips.resize(tracknum+1);
+			}
+			if(state == 2) trackClips[tracknum] = clipnum;
+						
+			cout << "setting trackstate " << tracknum << " c:" << clipnum << " state:" << state << endl;
+			
+			
+		} else if (m.getAddress() == "/live/clip/position") {
+			int tracknum = m.getArgAsInt32(0);
+			int clipnum = m.getArgAsInt32(1);
+			float position = m.getArgAsFloat(2);
+			float length = m.getArgAsFloat(3);
+			float loopstart = m.getArgAsFloat(4);
+			
+			if(tracknum >= trackClips.size()) {
+				trackClips.resize(tracknum+1);
+			}
+			if(tracknum >= trackProgress.size()) {
+				trackProgress.resize(tracknum+1);
+			}
+			
+			trackClips[tracknum] = clipnum;
+			trackProgress[tracknum] = fmod(position - loopstart, length) / length;
+			
+			cout << "setting trackprogress " << trackProgress[tracknum] << endl;
+			
+			
 		}
-        
-	}
     
+	}
+
 	//this is purely workaround for a mysterious OSCpack bug on 64bit linux
 	// after startup, reinit the receivers
 	// must be a timing problem, though - in debug, stepping through, it works.
@@ -167,7 +199,66 @@ void AbletonController::sendMessage(string msg) {
 	clientSender.sendMessage(m);
 	
 }
+bool AbletonController:: togglePlaying(){
+	if(playing) stopAll();
+	else playFromBeginning();
+	
+	return playing;
+	
+	
+}
 
+int AbletonController :: getPlayingClipForTrack(int track){
+	
+	//cout << "getFirstPlayingClipForTrack " << track << endl;
+	if(track>=trackClips.size()) {
+		//	cout << "no data" << endl;
+		return -1;
+		
+	} else return (trackClips[track]);
+	
+	
+}
+
+float AbletonController :: getProgressForTrack(int track){
+	
+	//cout << "getFirstPlayingClipForTrack " << track << endl;
+	if(track>=trackProgress.size()) {
+		//	cout << "no data" << endl;
+		return 1;
+		
+	} else return (trackProgress[track]);
+	
+	
+}
+
+float AbletonController :: getLevelForTrack(int track){
+	
+	//cout << "getFirstPlayingClipForTrack " << track << endl;
+	if(track>=trackLevels.size()) {
+		//	cout << "no data" << endl;
+		return 0;
+		
+	} else return (trackLevels[track]);
+	
+	
+}
+
+void AbletonController::playFromBeginning() {
+		
+	sendMessage("/live/play");
+	playing = true;
+	
+}
+
+void AbletonController::sendMessage(string msg, int p1) {
+	ofxOscMessage m;
+	m.setAddress(msg);
+	m.addIntArg(p1);
+
+	clientSender.sendMessage(m);
+	
+}
 void AbletonController::sendMessage(string msg, int p1, int p2) {
 	ofxOscMessage m;
 	m.setAddress(msg);
@@ -177,6 +268,7 @@ void AbletonController::sendMessage(string msg, int p1, int p2) {
 	
 }
 
+
 void AbletonController::stopAll() {
 	
 	
@@ -184,6 +276,7 @@ void AbletonController::stopAll() {
     
     m.setAddress("/live/stop");
     clientSender.sendMessage(m);
+	playing = false;
 	
 	
 }

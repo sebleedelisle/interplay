@@ -223,4 +223,13 @@ dependencies: \
   ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ContourFinder.h \
   ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/RunningBackground.h \
   ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/Flow.h \
-  ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h
+  ../../../addons/ofxCv/libs/ofxCv/include/ofxCv/ObjectFinder.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxGui.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxToggle.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxBaseGui.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxSlider.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxSliderGroup.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxGuiGroup.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxButton.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxLabel.h \
+  /Users/sebretina/Dropbox/openFrameworks/apps/interplay/addons/ofxGui/src/ofxPanel.h

@@ -6,6 +6,7 @@
 
 #include "AbletonController.h"
 #include "ofxCv.h"
+#include "ofxGui.h"
 
 using namespace cv;
 using namespace ofxCv;
@@ -20,12 +21,15 @@ class ofApp : public ofBaseApp {
 		void update();
 		void draw();
     
-   
+		void initGui();
+	
 		void keyPressed(int key);
 		void keyReleased(int key);
         void exit(); 
     
     
+	ofFbo outputFbo; 
+	
 	int thresholdLevel; 
     AbletonController& ableton;
 	vector <AudienceSection> audienceSections;
@@ -40,6 +44,9 @@ class ofApp : public ofBaseApp {
     int currentScene;
 	
 	ofImage audiencePreview;
+	
+	ofxPanel appGui;
+	ofParameter<bool> test; 
     
 
     
