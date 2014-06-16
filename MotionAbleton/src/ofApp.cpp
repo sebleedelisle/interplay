@@ -75,7 +75,7 @@ void ofApp::setup(){
 		
 	}
 	
-	//audiencePreview.loadImage("img/FPORoom.jpg");
+	audiencePreview.loadImage("img/FPORoom.png");
     
  
     initGui();
@@ -140,6 +140,13 @@ void ofApp::draw(){
 	ofFill();
     ofBackground(0);
 	ofSetColor(255 * camBrightness);
+	
+	ofPushMatrix();
+	if(disableMirror) {
+		ofTranslate(ofGetWidth(), 0);
+		ofScale(-1,1);
+	}
+	
 	current.draw(0,0, 1280, 720);
 	//ofSetColor(100);
 	//audiencePreview.draw(0,0,1280,720);
@@ -149,6 +156,8 @@ void ofApp::draw(){
     diff.draw(0,0, 1280, 720);
 	ofSetColor(255);
     ofDisableBlendMode();
+	ofPopMatrix(); 
+	
 	
 	for(int i = 0; i<audienceSections.size(); i++) {
 		audienceSections[i].draw(appGui.getVisible());
@@ -194,12 +203,14 @@ void ofApp::initGui() {
 	appGui.add(motionBrightness.set("motion brightness", 1,0,1));
 	appGui.add(motionThreshold.set("motion threshold", 0,0,255));
 	
+	appGui.add(disableMirror.set("disable mirror", false));
+	
 	appGui.load();
 	for(int i = 0; i<audienceSections.size(); i++) {
 		audienceSections[i].enabled = true;
 		audienceSections[i].motionLevelRaw = 0;
 	}
-	
+	disableMirror = false;
 	
 }
 
