@@ -92,8 +92,8 @@ void AudienceSection::update(){
 		motionLevel = ofMap(motionLevelRaw,motionLevelMin, motionLevelMax, 0,1,true);
 
 		
-		smoothedMotionLevel*=0.997;
-		smoothedMotionLevel += (motionLevel*0.005);
+		smoothedMotionLevel*= 0.96;//0.997;
+		smoothedMotionLevel +=  (motionLevel*0.04);//(motionLevel*0.005);
 		if(smoothedMotionLevel>=0.99) smoothedMotionLevel = 0.99;
 		updateCount++;
 		

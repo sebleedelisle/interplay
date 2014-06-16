@@ -51,6 +51,8 @@ class ofApp : public ofBaseApp {
 	ofParameter<float> camBrightness;
 	ofParameter<float> motionBrightness;
 	ofParameter<int> motionThreshold;
+	ofParameter<bool> disableMirror; 
+	
     
 
     
