@@ -20,7 +20,7 @@ void ofApp::setup(){
     
 	float imageScale = 0.5;
 	
-  //  grabber.setDeviceID(1);
+    //grabber.setDeviceID(1);
     grabber.initGrabber(1280*imageScale, 720*imageScale, 30);
 	//grabber.videoSettings();
     
