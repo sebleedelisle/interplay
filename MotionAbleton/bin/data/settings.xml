@@ -1,7 +1,7 @@
 <App_settings>
 	<test>0</test>
 	<enabled>1</enabled>
-	<UnknownName>1.4749</UnknownName>
+	<UnknownName>1.74298</UnknownName>
 	<motionLevelMin0>1.93333</motionLevelMin0>
 	<motionLevelMax0>13.6</motionLevelMax0>
 	<motionLevelMin1>1.13333</motionLevelMin1>
@@ -11,4 +11,7 @@
 	<motionLevelMin3>1.46667</motionLevelMin3>
 	<motionLevelMax3>13.2</motionLevelMax3>
 <App_settings/>
+<camera_brightness>1</camera_brightness>
+	<motion_brightness>1</motion_brightness>
+<motion_threshold>0</motion_threshold>
 </App_settings>

@@ -15,16 +15,16 @@ void ofApp::setup(){
 
     ableton.init("localhost");
     
-	float imageScale = 0.5;
+	float imageScale = 1;
 	
     grabber.setDeviceID(1);
     grabber.initGrabber(1280*imageScale, 720*imageScale, 30);
    
+	//current.allocate(1280*imageScale, 720*imageScale, OF_IMAGE_COLOR);
 	imitate(current, grabber);
-	imitate(previous, grabber);
-	imitate(diff, grabber);
-	
-    thresholdLevel = 0;
+	imitate(previous, current);
+	imitate(diff, current);
+	//diff.allocate(1280*imageScale, 720*imageScale, OF_IMAGE_GRAYSCALE);
 	
 	audienceSections.push_back(AudienceSection());
 	audienceSections.push_back(AudienceSection());
@@ -56,7 +56,7 @@ void ofApp::setup(){
 		float halfwidth = (ofGetWidth()*0.5/6)-4;
 		float halfheight = 320;
 		 
-		
+		 
 		ofRectangle rect(x-halfwidth, y - (halfheight*1.5), halfwidth*2, halfheight*1);
 		
 		// warp points
@@ -105,8 +105,8 @@ void ofApp::update(){
         absdiff(previous, current, diff);
         
         // and run a threshold filter on it if required
-        if(thresholdLevel>0)
-            threshold(diff, thresholdLevel);
+        if(motionThreshold>0)
+            threshold(diff, motionThreshold);
 
         diff.update();
         
@@ -139,19 +139,19 @@ void ofApp::draw(){
 	
 	ofFill();
     ofBackground(0);
-	ofSetColor(255);
+	ofSetColor(255 * camBrightness);
 	current.draw(0,0, 1280, 720);
-	ofSetColor(100);
-	audiencePreview.draw(0,0,1280,720);
+	//ofSetColor(100);
+	//audiencePreview.draw(0,0,1280,720);
 	
-	ofSetColor(120);
+	ofSetColor(255 * motionBrightness);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
     diff.draw(0,0, 1280, 720);
 	ofSetColor(255);
     ofDisableBlendMode();
 	
 	for(int i = 0; i<audienceSections.size(); i++) {
-		audienceSections[i].draw();
+		audienceSections[i].draw(appGui.getVisible());
 	}
 	
 	ableton.draw();
@@ -179,19 +179,20 @@ void ofApp::initGui() {
 	
 	appGui.setup("App settings", "settings.xml");
 	appGui.setPosition(ofPoint(10,10));
-	appGui.setVisible(true);
-	appGui.add(test.set("test", false));
+	appGui.setVisible(false);
 	
 	for(int i = 0; i<audienceSections.size(); i++) {
 	
-		appGui.add(audienceSections[i].enabled);
+		//appGui.add(audienceSections[i].enabled);
 		appGui.add(audienceSections[i].motionLevelRaw);
 		
 		appGui.add(audienceSections[i].motionLevelMin);
 		appGui.add(audienceSections[i].motionLevelMax);
 	}
-	//laserGui.add(&laserManager.connectButton);
-	//laserGui.add(laserManager.parameters);
+	
+	appGui.add(camBrightness.set("camera brightness", 1,0,1));
+	appGui.add(motionBrightness.set("motion brightness", 1,0,1));
+	appGui.add(motionThreshold.set("motion threshold", 0,0,255));
 	
 	appGui.load();
 	for(int i = 0; i<audienceSections.size(); i++) {
@@ -231,7 +232,11 @@ void ofApp::keyPressed(int key){
     } else if(key == '4') {
         audienceSections[3].toggleEnabled();
     }
-     
+	
+	if(key=='s') {
+		current.saveImage(ofGetTimestampString("%Y%m%d-%H%M%S")+".png");
+	}
+    
     
 
 }
@@ -243,7 +248,7 @@ void ofApp::keyReleased(int key){
 }
 
 void ofApp::exit() {
-    
+    current.saveImage(ofGetTimestampString("%Y%m%d-%H%M%S")+".png");
     ableton.exit();
 	appGui.save();
     

@@ -20,7 +20,7 @@ class AudienceSection {
 
 	void init(int tracknum, ofRectangle area, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour, int realtrack = -1);
 	void update();
-	void draw();
+	void draw(bool showMotionDebug = false);
 	void reset();
 	
 	bool toggleEnabled(); 
