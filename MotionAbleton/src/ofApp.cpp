@@ -75,7 +75,7 @@ void ofApp::setup(){
 		
 	}
 	
-	audiencePreview.loadImage("img/FPORoom.jpg");
+	//audiencePreview.loadImage("img/FPORoom.jpg");
     
  
     initGui();
