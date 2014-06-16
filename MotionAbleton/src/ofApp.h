@@ -30,7 +30,7 @@ class ofApp : public ofBaseApp {
     
 	ofFbo outputFbo; 
 	
-	int thresholdLevel; 
+	//int thresholdLevel;
     AbletonController& ableton;
 	vector <AudienceSection> audienceSections;
 		
@@ -43,10 +43,14 @@ class ofApp : public ofBaseApp {
     int motionBand;
     int currentScene;
 	
+	
+	
 	ofImage audiencePreview;
 	
 	ofxPanel appGui;
-	ofParameter<bool> test; 
+	ofParameter<float> camBrightness;
+	ofParameter<float> motionBrightness;
+	ofParameter<int> motionThreshold;
     
 
     

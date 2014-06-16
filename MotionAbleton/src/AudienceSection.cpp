@@ -124,7 +124,7 @@ void AudienceSection::update(){
 
 
 
-void AudienceSection :: draw() {
+void AudienceSection :: draw(bool showMotionDebug) {
 	
 	AbletonController& ableton = *AbletonController::instance();
 
@@ -136,12 +136,14 @@ void AudienceSection :: draw() {
 	
 	ofNoFill();
     
-	//showing the motion image in the top left
-    ofPushMatrix();
-	ofScale(0.2,0.2);
-	unwarped.draw(abletonTrack*(unwarped.width+10), 0);
-	ofPopMatrix();
-	
+	if(showMotionDebug) {
+		//showing the motion image in the top right
+		ofPushMatrix();
+		ofTranslate(ofGetWidth(),0);
+		ofScale(0.4,0.4);
+		unwarped.draw((abletonTrack-4)*(unwarped.width+10), 0);
+		ofPopMatrix();
+	}
 	
 	   
 	//rect defining the channel
@@ -306,15 +308,9 @@ bool AudienceSection::toggleEnabled() {
 
 	enabled = !enabled;
 	if(!enabled) {
-		ableton.playClip(0,abletonTrack);
-		if(abletonTrack2>=0) ableton.playClip(0, abletonTrack2);
 		ableton.sendMessage("/live/mute", abletonTrack, 1);
 		if(abletonTrack2>=0) ableton.sendMessage("/live/mute", abletonTrack2, 1);
-		
-		currentClip = 0;
-		motionBand = 0;
-		smoothedMotionLevel = 0;
-		motionLevel = 0;
+		reset();
 		
 		
 		
@@ -326,5 +322,20 @@ bool AudienceSection::toggleEnabled() {
 	}
 	
 	return enabled;
+
+}
+
+void AudienceSection::reset() {
+	
+	AbletonController& ableton = *AbletonController::instance();
+
+	ableton.playClip(0,abletonTrack);
+	if(abletonTrack2>=0) ableton.playClip(0, abletonTrack2);
+	
+	currentClip = 0;
+	motionBand = 0;
+	smoothedMotionLevel = 0;
+	motionLevel = 0;
+
 
 }

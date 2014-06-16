@@ -138,23 +138,23 @@ void AbletonController::update() {
 
 void AbletonController::draw() {
     
-	ofPushStyle();
-    ofSetColor(255);
-	/*
-    ofRect(0,0,masterMeter*ofGetWidth(),10);
-    
-    for(int i = 0; i<trackLevels.size(); i++) {
-        
-        ofRect(0, i*20 + 20, trackLevels[i]*ofGetWidth(), 10);
-        
-    }
-	 */
-    ofNoFill();
-	ofRect(500,0,20,20);
-	ofFill();
-	ofRect(500,0,20*beatProgress, 20);
-	
-    ofPopStyle();
+//	ofPushStyle();
+//    ofSetColor(255);
+//	/*
+//    ofRect(0,0,masterMeter*ofGetWidth(),10);
+//    
+//    for(int i = 0; i<trackLevels.size(); i++) {
+//        
+//        ofRect(0, i*20 + 20, trackLevels[i]*ofGetWidth(), 10);
+//        
+//    }
+//	 */
+//    ofNoFill();
+//	ofRect(500,0,20,20);
+//	ofFill();
+//	ofRect(500,0,20*beatProgress, 20);
+//	
+//    ofPopStyle();
 }
 
 //--------------------------------------------------------------
