@@ -1,0 +1,14 @@
+<App_settings>
+	<test>0</test>
+	<enabled>0</enabled>
+	<UnknownName>1.37926</UnknownName>
+	<motionLevelMin0>4</motionLevelMin0>
+	<motionLevelMax0>13.6</motionLevelMax0>
+	<motionLevelMin1>4</motionLevelMin1>
+	<motionLevelMax1>13.6</motionLevelMax1>
+	<motionLevelMin2>4</motionLevelMin2>
+	<motionLevelMax2>13.2</motionLevelMax2>
+	<motionLevelMin3>4</motionLevelMin3>
+	<motionLevelMax3>13.2</motionLevelMax3>
+<App_settings/>
+</App_settings>

@@ -10,6 +10,7 @@
 
 #include "AbletonController.h"
 #include "ofxCv.h"
+#include "ofxGui.h"
 
 class AudienceSection {
 
@@ -17,9 +18,10 @@ class AudienceSection {
 	
 	AudienceSection();
 
-	void init(int channel, ofRectangle area, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour);
+	void init(int tracknum, ofRectangle area, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour, int realtrack = -1);
 	void update();
 	void draw();
+	void reset(); 
 	
 	void updateMotionImage(ofImage& motionImage); 
 
@@ -30,19 +32,27 @@ class AudienceSection {
 	ofRectangle area; 
 	
 	cv::Scalar diffMean;
-
-	float motionLevel;
-	float motionLevelMin;
-	float motionLevelMax;
+	
+    ofParameter<bool> enabled;
+	ofParameter<float> motionLevelRaw;
+	ofParameter<float> motionLevel;
+	ofParameter<float> motionLevelMin;
+	ofParameter<float> motionLevelMax;
+	
+	ofxPanel gui;
+	
 	float smoothedMotionLevel;
 
-	int abletonChannel; 
+	int abletonTrack;  // "fake" track for group tracks
+	int abletonTrack2; // real track with audio on
 	int motionBand;
-    int currentScene;
-	int numScenes;
+    int currentClip;
+	int numClips;
+	
+	long updateCount; 
     
     ofColor colour;
     string name;
     ofTrueTypeFont	labelFont;
-    
+
 };
