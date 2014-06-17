@@ -115,7 +115,8 @@ void AbletonController::update() {
 			}
 			
 			trackClips[tracknum] = clipnum;
-			trackProgress[tracknum] = fmod(position - loopstart, length) / length;
+			//trackProgress[tracknum] = fmod(position - loopstart, length) / length;
+			trackProgress[tracknum] = fmod(position - loopstart, 8) / 8;
 			
 			cout << "setting trackprogress " << trackProgress[tracknum] << endl;
 			

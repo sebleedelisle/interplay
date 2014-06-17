@@ -78,7 +78,7 @@ void ofApp::setup(){
 	}
 	
     //Load our images
-    //audiencePreview.loadImage("img/FPORoom.png");
+    audiencePreview.loadImage("img/FPORoom.png");
     titleScreen.loadImage("img/TitleScreen.jpg");
     bandLogo.loadImage("img/BandLogoSmall.png");
     
@@ -126,7 +126,7 @@ void ofApp::update(){
         
     }
 	for(int i = 0; i<audienceSections.size(); i++) {
-		audienceSections[i].update();
+		audienceSections[i].update(motionSensitivityPreset);
 	}
     
 }
@@ -141,7 +141,6 @@ void ofApp::draw(){
 	
 	ofFill();
     ofBackground(0);
-	ofSetColor(255 * camBrightness);
 	
 	ofPushMatrix();
 	if(disableMirror) {
@@ -149,6 +148,7 @@ void ofApp::draw(){
 		ofScale(-1,1);
 	}
 	
+	ofSetColor(255 * camBrightness);
 	current.draw(0,0, 1280, 720);
 	//ofSetColor(100);
 	//audiencePreview.draw(0,0,1280,720);
@@ -210,7 +210,8 @@ void ofApp::initGui() {
 		appGui.add(audienceSections[i].motionLevelMin);
 		appGui.add(audienceSections[i].motionLevelMax);
 	}
-	
+//	motionSensitivityPreset
+	appGui.add(motionSensitivityPreset.set("motion change speed", 1,0,3));
 	appGui.add(camBrightness.set("camera brightness", 1,0,1));
 	appGui.add(motionBrightness.set("motion brightness", 1,0,1));
 	appGui.add(motionThreshold.set("motion threshold", 0,0,255));
@@ -268,8 +269,38 @@ void ofApp::keyPressed(int key){
             showTitle = false;
         }
     }
-    
-
+	
+	if(appGui.getVisible()) {
+		if(key == 'm') { // set maximum
+			for(int i = 0; i<audienceSections.size(); i++) {
+				
+				AudienceSection& section = audienceSections[i];
+				section.motionLevelMax = section.motionLevelRaw*0.9;
+				
+			}
+			
+			
+		} else if(key == 'n') { // set minimum
+			for(int i = 0; i<audienceSections.size(); i++) {
+				
+				AudienceSection& section = audienceSections[i];
+				section.motionLevelMin = section.motionLevelRaw*1.05;
+				
+			}
+		
+		} else if(key == 'r') { // reset all motion areas!
+			
+			for(int i = 0; i<audienceSections.size(); i++) {
+				
+				AudienceSection& section = audienceSections[i];
+				section.motionLevelMin = 3;
+				section.motionLevelMax = 10;
+				
+			}
+			
+			
+		}
+	}
 }
 
 
@@ -279,7 +310,7 @@ void ofApp::keyReleased(int key){
 }
 
 void ofApp::exit() {
-    current.saveImage(ofGetTimestampString("%Y%m%d-%H%M%S")+".png");
+    //current.saveImage(ofGetTimestampString("%Y%m%d-%H%M%S")+".png");
     ableton.exit();
 	appGui.save();
     

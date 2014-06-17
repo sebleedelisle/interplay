@@ -19,7 +19,7 @@ class AudienceSection {
 	AudienceSection();
 
 	void init(int tracknum, ofRectangle area, vector<ofPoint> srcMotionPoints, string instrumentName, ofColor instrumentColour, int realtrack = -1);
-	void update();
+	void update(int motionsetting);
 	void draw(bool showMotionDebug = false);
 	void reset();
 	
@@ -27,6 +27,7 @@ class AudienceSection {
 	
 	void updateMotionImage(ofImage& motionImage); 
 
+	ofRectangle getRectForClip(int index);
 	
 	ofImage unwarped;
 	vector<cv::Point2f> warpPoints;
@@ -37,9 +38,12 @@ class AudienceSection {
 	
     ofParameter<bool> enabled;
 	ofParameter<float> motionLevelRaw;
+	//float motionLevelRawSmoothed;
 	ofParameter<float> motionLevel;
 	ofParameter<float> motionLevelMin;
 	ofParameter<float> motionLevelMax;
+	
+	//int motionSensitivityPreset;
 	
 	ofxPanel gui;
 	

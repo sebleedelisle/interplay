@@ -20,6 +20,7 @@ AudienceSection::AudienceSection() {
 	motionLevel = 0;
 	smoothedMotionLevel = 0;
 	motionLevelRaw = 0;
+	//motionLevelRawSmoothed = 0;
 	motionLevelMin = 2;
 	motionLevelMax = 10;
     
@@ -66,7 +67,7 @@ void AudienceSection::init(int tracknum, ofRectangle audienceArea, vector<ofPoin
 }
 
 
-void AudienceSection::update(){
+void AudienceSection::update(int motionsetting){
 	
 	AbletonController& ableton = *AbletonController::instance();
 	
@@ -82,18 +83,40 @@ void AudienceSection::update(){
 		
 		diffMean = mean(toCv(unwarped));
 		
-		if(time<5000) {
+		if(time<2000) {
 			diffMean[0] = 0;
 			motionLevelRaw = 0;
+//			motionLevelRawSmoothed = 0;
 			motionLevel = 0;
 			smoothedMotionLevel = 0;
 		}
-		motionLevelRaw += (diffMean[0]-motionLevelRaw) *0.3;
+		motionLevelRaw += (diffMean[0]-motionLevelRaw) *0.1;
+//		motionLevelRawSmoothed += (motionLevelRaw - motionLevelSmoothed)
 		motionLevel = ofMap(motionLevelRaw,motionLevelMin, motionLevelMax, 0,1,true);
 
+		float resetSpeed;
+		float moveSpeed;
+		if(motionsetting == 0) {
+			resetSpeed = 0.997;
+			moveSpeed = 0.005;
+			
+		} else if(motionsetting == 1) {
+			resetSpeed = 0.989;
+			moveSpeed = 0.015;
+			
+		} else if(motionsetting == 2) {
+			resetSpeed = 0.98;
+			moveSpeed = 0.025;
+			
+		} else if(motionsetting == 3) {
+			resetSpeed = 0.96;
+			moveSpeed = 0.04;
+			
+		}
 		
-		smoothedMotionLevel*= 0.96;//0.997;
-		smoothedMotionLevel +=  (motionLevel*0.04);//(motionLevel*0.005);
+		
+		smoothedMotionLevel*= resetSpeed;//0.96;//0.997;
+		smoothedMotionLevel +=  (motionLevel*moveSpeed);//(motionLevel*0.005);
 		if(smoothedMotionLevel>=0.99) smoothedMotionLevel = 0.99;
 		updateCount++;
 		
@@ -106,7 +129,7 @@ void AudienceSection::update(){
 	}
     
  	
-    int newmotionband = (smoothedMotionLevel * numClips);
+    int newmotionband = (smoothedMotionLevel+ (1.0f/((numClips*2.0f)-1.0f))) * ((float)numClips-0.5f);// + (1.0f/((numClips*2.0f)-1.0f));
     if(newmotionband!=motionBand) {
         
         if(ableton.isPlaying() && enabled) {
@@ -167,21 +190,33 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	
     //outline of each channel
   	ofSetColor(colour);
-    ofRect(0,0,rect.width, rect.height);
+    //ofRect(0,0,rect.width, rect.height);
 	
   
-	ofFill();
+	// outline blocks
 	ofRectangle block;
+	for(int i =0; i<numClips; i++) {
+		block = getRectForClip(i);
+		ofSetColor(colour, 150);
+		ofRect(block);
+		
+	}
+
+	
+	ofFill();
+
   
     float thickness = 5;
  
 	//ofSetLineWidth(4);
     
-    if((ofGetElapsedTimeMillis()%300>150) && (currentClip!=motionBand)) {
+    if((ofGetElapsedTimeMillis()%300>150) ||(currentClip == motionBand) ) {
 		ofSetColor(colour.r, colour.g, colour.b,50);
 
-		block.set(0,motionBand * (rect.height/numClips), rect.width, rect.height/numClips);
-		ofRect(block);
+		block = getRectForClip(motionBand);
+		
+		//block.set(0,motionBand * (rect.height/numClips), rect.width, rect.height/numClips);
+		if(currentClip!=motionBand) ofRect(block);
 		
 		/*
 		ofPushMatrix();
@@ -192,6 +227,16 @@ void AudienceSection :: draw(bool showMotionDebug) {
 		ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
 		ofPopMatrix();
 		 */
+		
+		// draw outline block
+		ofPushMatrix();
+		ofTranslate(block.x, block.y);
+		ofSetColor(colour.r, colour.g, colour.b);
+		ofRect(0, 0, thickness, block.height); // left
+		ofRect(thickness, 0, block.width - (thickness*2), thickness); // top
+		ofRect(block.width-thickness,0, thickness, block.height); // right
+		ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
+		ofPopMatrix();
 
 	
 	
@@ -200,31 +245,60 @@ void AudienceSection :: draw(bool showMotionDebug) {
     ofSetColor(colour);
 	
 	float progress = ableton.getProgressForTrack(abletonTrack);
-	block.set(0,currentClip * (rect.height/numClips), rect.width, rect.height/numClips);
+	
+	// draw currently playing rectangle
+	block = getRectForClip(currentClip);
 	
 	
 	ofPushMatrix();
 	
 	ofTranslate(block.x, block.y);
-	ofSetColor(colour.r, colour.g, colour.b);
 	
-	ofRect(0, 0, thickness, block.height); // left
-	ofRect(thickness, 0, block.width - (thickness*2), thickness); // top
-	ofRect(block.width-thickness,0, thickness, block.height); // right
-	ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
+	// draw outline block
+	//ofSetColor(colour.r, colour.g, colour.b);
+	//ofRect(0, 0, thickness, block.height); // left
+	//ofRect(thickness, 0, block.width - (thickness*2), thickness); // top
+	//ofRect(block.width-thickness,0, thickness, block.height); // right
+	//ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
+	
 	
 	ofSetColor(colour.r, colour.g, colour.b,100);
-	
-	ofRect(thickness, thickness, block.width - (thickness*2), (block.height- (thickness*2)) * (1-progress)); // top
-	//ofRect(0, 0, block.width , (block.height) * (1-progress)); // top
-	
+	// draw filling up block
+	//ofRect(thickness, thickness, block.width - (thickness*2), (block.height- (thickness*2)) * (1-progress)); // top
+	ofRect(0, 0, block.width , (block.height));
+	ofRect(0, 0, block.width , (block.height) * (1-progress));
 	ofPopMatrix();
 
 	ofSetColor(255,255,255);
-	ofRect(0,(smoothedMotionLevel*rect.height) - 5, rect.width,10);
-	//ofRect(rect.width/2,motionLevel*rect.height, rect.width/2,5);
-    
-    //box
+	ofRect(0,(smoothedMotionLevel*(rect.height-5)), rect.width,10);
+
+	
+	// TRACK NUMBERS
+	ofColor lighter = colour;
+	lighter.setSaturation(100);
+	
+	for(int i =0; i<numClips; i++) {
+		block = getRectForClip(i);
+		//ofSetColor(colour, 150);
+		//ofRect(block);
+		
+		ofPushMatrix();
+		ofTranslate(block.getCenter());
+		ofScale(0.8,(i==0)? -0.6 : -0.8);
+		ofSetColor(lighter);
+		string numstring = ofToString(i);
+		float halfWidth = labelFont.stringWidth(numstring)/2;
+		float halfHeight = labelFont.stringHeight(numstring)/2;
+		labelFont.drawString(numstring,  - halfWidth, halfHeight);
+		ofPopMatrix();
+		
+		
+		
+	}
+	
+	
+	// LABELS
+    //box for label at top
     ofSetColor(colour);
 	if(!enabled) ofSetColor(colour*0.3);
     int boxWidth = area.width;
@@ -289,6 +363,24 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	
 
 	ofPopStyle();
+	
+	
+}
+
+ofRectangle AudienceSection::getRectForClip(int index) {
+	
+	float y;// = index * (area.height/numClips)
+	float height;
+	
+	if(index == 0) {
+		y = 0;
+		height = (area.height/(numClips-0.5)) *0.5;
+	} else  {
+		y = (index-0.5) * (area.height*((numClips+0.5) / numClips )/numClips) ;
+		height = (area.height/(numClips-0.5));
+	}
+	
+	return ofRectangle(0,y, area.width, height);
 	
 	
 }
