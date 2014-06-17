@@ -47,6 +47,8 @@ void ofApp::setup(){
     instrumentNames.push_back("BASS");
     instrumentNames.push_back("SYNTH");
     instrumentNames.push_back("GUITAR");
+    
+    showTitle = false;
 
 	
 	for(int i = 0; i<4; i++) {
@@ -75,14 +77,14 @@ void ofApp::setup(){
 		
 	}
 	
-	audiencePreview.loadImage("img/FPORoom.png");
+    //Load our images
+    //audiencePreview.loadImage("img/FPORoom.png");
+    titleScreen.loadImage("img/TitleScreen.jpg");
+    bandLogo.loadImage("img/BandLogoSmall.png");
     
  
     initGui();
    
-    
-    
- 
 }
 
 //--------------------------------------------------------------
@@ -150,6 +152,8 @@ void ofApp::draw(){
 	current.draw(0,0, 1280, 720);
 	//ofSetColor(100);
 	//audiencePreview.draw(0,0,1280,720);
+   
+
 	
 	ofSetColor(255 * motionBrightness);
 	ofEnableBlendMode(OF_BLENDMODE_ADD);
@@ -163,12 +167,20 @@ void ofApp::draw(){
 		audienceSections[i].draw(appGui.getVisible());
 	}
 	
+    //draw the band logo - need transparency here
+    ofEnableAlphaBlending();
+    bandLogo.draw((ofGetWidth()*0.5)-(308/2),20,308,127);
+    
 	ableton.draw();
-
+    
+    // draw the title image on top if flagged
+    if (showTitle){
+        titleScreen.draw(0,0,1280,720);
+    }
 	outputFbo.end();
-	
 	outputFbo.draw(0,0);
 	
+    
 	appGui.draw();
 
 
@@ -248,6 +260,14 @@ void ofApp::keyPressed(int key){
 		current.saveImage(ofGetTimestampString("%Y%m%d-%H%M%S")+".png");
 	}
     
+    if (key=='t') {
+       // Toggle the title image
+        if (!showTitle){
+            showTitle = true;
+        }else {
+            showTitle = false;
+        }
+    }
     
 
 }

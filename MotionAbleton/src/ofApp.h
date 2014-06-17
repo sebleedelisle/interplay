@@ -46,6 +46,9 @@ class ofApp : public ofBaseApp {
 	
 	
 	ofImage audiencePreview;
+    bool showTitle;
+    ofImage titleScreen;
+    ofImage bandLogo;
 	
 	ofxPanel appGui;
 	ofParameter<float> camBrightness;
