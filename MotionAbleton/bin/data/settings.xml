@@ -1,19 +1,19 @@
 <App_settings>
 	<test>0</test>
 	<enabled>1</enabled>
-	<UnknownName>5.60519e-45</UnknownName>
-	<motionLevelMin0>4</motionLevelMin0>
-	<motionLevelMax0>10</motionLevelMax0>
-	<motionLevelMin1>4</motionLevelMin1>
-	<motionLevelMax1>10</motionLevelMax1>
-	<motionLevelMin2>4</motionLevelMin2>
-	<motionLevelMax2>10</motionLevelMax2>
-	<motionLevelMin3>4</motionLevelMin3>
-	<motionLevelMax3>10</motionLevelMax3>
+	<UnknownName>0.301243</UnknownName>
+	<motionLevelMin0>0.0595936</motionLevelMin0>
+	<motionLevelMax0>10.0992</motionLevelMax0>
+	<motionLevelMin1>0.0615616</motionLevelMin1>
+	<motionLevelMax1>8.5282</motionLevelMax1>
+	<motionLevelMin2>0.0348706</motionLevelMin2>
+	<motionLevelMax2>15.4511</motionLevelMax2>
+	<motionLevelMin3>0.0252027</motionLevelMin3>
+	<motionLevelMax3>10.1442</motionLevelMax3>
 <App_settings/>
 <camera_brightness>1</camera_brightness>
-	<motion_brightness>0.993333</motion_brightness>
-	<motion_threshold>61</motion_threshold>
+	<motion_brightness>0.89</motion_brightness>
+	<motion_threshold>60</motion_threshold>
 <disable_mirror>0</disable_mirror>
 <motion_sensitivity>1</motion_sensitivity>
 <motion_change_speed>1</motion_change_speed>
