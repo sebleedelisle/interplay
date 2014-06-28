@@ -49,6 +49,8 @@ class ofApp : public ofBaseApp {
     bool showTitle;
     ofImage titleScreen;
     ofImage bandLogo;
+    ofTrueTypeFont	labelFont;
+
 	
 	ofxPanel appGui;
 	ofParameter<float> camBrightness;

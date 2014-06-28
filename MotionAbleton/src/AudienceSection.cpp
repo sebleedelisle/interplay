@@ -162,7 +162,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	if(showMotionDebug) {
 		//showing the motion image in the top right
 		ofPushMatrix();
-		ofTranslate(ofGetWidth(),0);
+		ofTranslate(1280,0);
 		ofScale(0.4,0.4);
 		unwarped.draw((abletonTrack-4)*(unwarped.width+10), 0);
 		ofPopMatrix();

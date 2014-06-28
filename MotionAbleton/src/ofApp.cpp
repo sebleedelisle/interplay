@@ -9,7 +9,11 @@ using namespace cv;
 void ofApp::setup(){
 	ofSetFrameRate(60); // run at 60 fps
 	ofSetVerticalSync(true);
-	
+    
+    labelFont.loadFont("Variable Black", 25, true, true, true);
+    labelFont.setLetterSpacing(1);
+    labelFont.setSpaceSize(.4);
+
 
 	outputFbo.allocate(1280, 720, GL_RGB, 6);
 
@@ -169,7 +173,27 @@ void ofApp::draw(){
 	
     //draw the band logo - need transparency here
     ofEnableAlphaBlending();
-    bandLogo.draw((ofGetWidth()*0.5)-(308/2),20,308,127);
+    bandLogo.draw((1280*0.5)-(bandLogo.width/2),20);
+   
+    // draw countdown bars
+//    int countdown = 8- (ableton.currentBeatNum % 8);
+//    
+//    string numstring = "CHANGE IN " + ofToString(countdown);
+//    if(countdown>=7) numstring = "CHANGE";
+//    else if (countdown>4) numstring = "";
+//    
+
+    
+//    float halfWidth = labelFont.stringWidth(numstring)/2;
+//    float halfHeight = labelFont.stringHeight(numstring)/2;
+//    labelFont.drawString(numstring, (1280/2) - halfWidth, halfHeight + 150);
+
+    int countdown =  (ableton.currentBeatNum % 8);
+    ofSetColor(220,140,255,200);
+    ofRect(ofMap(countdown,0,8,350,930),150,(930-350)/8,20);
+    ofNoFill();
+    ofSetColor(255);
+    ofRect(350,150,930-350,20);
     
 	ableton.draw();
     
@@ -178,8 +202,15 @@ void ofApp::draw(){
         titleScreen.draw(0,0,1280,720);
     }
 	outputFbo.end();
+    
+    
+    float scale = (float)ofGetWidth()/1280.0f;
+    float vertscale = (float)ofGetHeight()/720.0f;
+    if( vertscale < scale) scale = vertscale;
+    ofPushMatrix();
+    ofScale(scale, scale);
 	outputFbo.draw(0,0);
-	
+	ofPopMatrix();
     
 	appGui.draw();
 
