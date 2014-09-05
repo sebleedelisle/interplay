@@ -147,25 +147,61 @@ void AudienceSection::update(int motionsetting){
 
 
 
-void AudienceSection :: draw(bool showMotionDebug) {
+void AudienceSection :: draw(bool showMotionDebug, bool showMotionAreas) {
 	
 	AbletonController& ableton = *AbletonController::instance();
 
-	float angle = 50.0f;
+	float angle = 30.0f; // 50 for NYC
 	
 	
 	ofPushStyle();
 	ofEnableAlphaBlending();
+    
+    
+    // TO SHOW MOTION AREAS
+    if(showMotionAreas) {
+        ofPushMatrix();     // --------------------------- 1
+        
+        
+        ofNoFill();
+        //ofScale(2,2);
+        ofSetColor(colour);
+        ofDisableBlendMode();
+        
+        for(int i = 0; i<warpPoints.size(); i++) {
+            
+            ofPoint p(warpPoints[i].x, warpPoints[i].y);
+            
+            ofCircle(p, 2);
+            ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
+            
+            
+        }
+        ofBeginShape();
+        for(int i = 0; i<=warpPoints.size(); i++) {
+            
+            ofPoint p(warpPoints[i%4].x, warpPoints[i%4].y);
+            
+            ofVertex(p);
+            //ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
+            
+            
+        }
+        ofEndShape();
+        ofPopMatrix();     // --------------------------- 0
+
+    }
+    
 	
 	ofNoFill();
     
 	if(showMotionDebug) {
 		//showing the motion image in the top right
-		ofPushMatrix();
+		ofPushMatrix();     // --------------------------- 1
 		ofTranslate(1280,0);
 		ofScale(0.4,0.4);
 		unwarped.draw((abletonTrack-4)*(unwarped.width+10), 0);
-		ofPopMatrix();
+		ofPopMatrix();     // --------------------------- 0
 	}
 	
 	   
@@ -174,7 +210,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	
 	
 	
-	ofPushMatrix();
+	ofPushMatrix();     // ---------------------------1
     //translate to middle
 	ofTranslate(0,355, 20);
 	//cout << ofGetMouseY() << endl;
@@ -225,18 +261,18 @@ void AudienceSection :: draw(bool showMotionDebug) {
 		ofRect(thickness, 0, block.width - (thickness*2), thickness); // top
 		ofRect(block.width-thickness,0, thickness, block.height); // right
 		ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
-		ofPopMatrix();
+		ofPopMatrix();     // ---------------------------
 		 */
 		
 		// draw outline block
-		ofPushMatrix();
+		ofPushMatrix();     // --------------------------- 2
 		ofTranslate(block.x, block.y);
 		ofSetColor(colour.r, colour.g, colour.b);
 		ofRect(0, 0, thickness, block.height); // left
 		ofRect(thickness, 0, block.width - (thickness*2), thickness); // top
 		ofRect(block.width-thickness,0, thickness, block.height); // right
 		ofRect(thickness, block.height - thickness, block.width - (thickness*2), thickness); // top
-		ofPopMatrix();
+		ofPopMatrix();     // --------------------------- 1
 
 	
 	
@@ -250,7 +286,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	block = getRectForClip(currentClip);
 	
 	
-	ofPushMatrix();
+	ofPushMatrix();     // --------------------------- 2
 	
 	ofTranslate(block.x, block.y);
 	
@@ -267,7 +303,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 	//ofRect(thickness, thickness, block.width - (thickness*2), (block.height- (thickness*2)) * (1-progress)); // top
 	ofRect(0, 0, block.width , (block.height));
 	ofRect(0, 0, block.width , (block.height) * (1-progress));
-	ofPopMatrix();
+	ofPopMatrix();     // --------------------------- 1
 
 	ofSetColor(255,255,255);
 	ofRect(0,(smoothedMotionLevel*(rect.height-5)), rect.width,10);
@@ -282,7 +318,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 		//ofSetColor(colour, 150);
 		//ofRect(block);
 		
-		ofPushMatrix();
+		ofPushMatrix();     // --------------------------- 2
 		ofTranslate(block.getCenter());
 		ofScale(0.8,(i==0)? -0.6 : -0.8);
 		ofSetColor(lighter);
@@ -290,7 +326,7 @@ void AudienceSection :: draw(bool showMotionDebug) {
 		float halfWidth = labelFont.stringWidth(numstring)/2;
 		float halfHeight = labelFont.stringHeight(numstring)/2;
 		labelFont.drawString(numstring,  - halfWidth, halfHeight);
-		ofPopMatrix();
+		ofPopMatrix();     // --------------------------- 1
 		
 		
 		
@@ -324,42 +360,12 @@ void AudienceSection :: draw(bool showMotionDebug) {
     float halfHeight = labelFont.stringHeight(message)/2;
     labelFont.drawString(message, (boxWidth/2 - halfWidth), (boxHeight/2)+halfHeight);
     
-	ofPopMatrix();
+	ofPopMatrix();     // --------------------------- 0
 	
 	
 	
-	/*
-	 // TO SHOW MOTION AREAS
-	ofPushMatrix();
 	
-	
-	ofNoFill();
-	ofScale(2,2);
-	ofSetColor(colour);
-	ofDisableBlendMode();
-	
-	for(int i = 0; i<warpPoints.size(); i++) {
-		
-		ofPoint p(warpPoints[i].x, warpPoints[i].y);
-		
-		ofCircle(p, 2);
-		ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
-		
-		
-	}
-	ofBeginShape();
-	for(int i = 0; i<=warpPoints.size(); i++) {
-		
-		ofPoint p(warpPoints[i%4].x, warpPoints[i%4].y);
-		
-		ofVertex(p);
-		//ofDrawBitmapString(ofToString(abletonTrack)+ " "+ ofToString(i), p);
-		
-		
-	}
-	ofEndShape();
-	ofPopMatrix();
-*/
+
 	
 
 	ofPopStyle();

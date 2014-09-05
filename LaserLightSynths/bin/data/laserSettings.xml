@@ -1,0 +1,37 @@
+<LaserManager>
+		<Laser_Manager>
+			<UnknownName>ETHERDREAM_IDLE</UnknownName>
+			<intensity>0.795</intensity>
+			<test_pattern>0</test_pattern>
+			<sync_delay>0</sync_delay>
+			<points_per_second>33500</points_per_second>
+			<mask_margin_top>0</mask_margin_top>
+			<mask_margin_bottom>0</mask_margin_bottom>
+			<mask_margin_left>0</mask_margin_left>
+			<mask_margin_right>0</mask_margin_right>
+			<show_warp_points>0</show_warp_points>
+			<colour_change_offset>-3</colour_change_offset>
+			<flip_x>1</flip_x>
+			<flip_y>1</flip_y>
+			<laser_on_during_move>0</laser_on_during_move>
+			<preview_laser>1</preview_laser>
+			<preview_laser_dots>1</preview_laser_dots>
+			<post_transform_dots>0</post_transform_dots>
+			<move_speed>13.97</move_speed>
+			<move_points_padding>4</move_points_padding>
+			<shape_pre_blank_points>2</shape_pre_blank_points>
+			<shape_post_blank_points>0</shape_post_blank_points>
+			<dot_max_points>6</dot_max_points>
+			<line_acceleration>0.3292</line_acceleration>
+			<line_speed>3.52</line_speed>
+			<circle_overlap>0</circle_overlap>
+			<circle_acceleration>0.2095</circle_acceleration>
+			<circle_speed>21.95</circle_speed>
+			<eased_line_speed>6.5</eased_line_speed>
+			<eased_line_padding>2</eased_line_padding>
+			<spiral_spacing>6.035</spiral_spacing>
+		<use_mask_bitmap>0</use_mask_bitmap>
+			<show_mask_bitmap>0</show_mask_bitmap>
+		</Laser_Manager>
+<LaserManager/>
+</LaserManager>

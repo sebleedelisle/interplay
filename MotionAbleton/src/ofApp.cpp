@@ -53,13 +53,15 @@ void ofApp::setup(){
     instrumentNames.push_back("GUITAR");
     
     showTitle = false;
-
+    
+    int screenWidth = 1280;
+    int screenHeight = 720;
 	
 	for(int i = 0; i<4; i++) {
-		float x = ofMap(i, 0, 3, ofGetWidth()*0.25, ofGetWidth()*0.75);
+		float x = ofMap(i, 0, 3, screenWidth*0.25, screenWidth*0.75);
 		float y = ofGetHeight()/2;
 		
-		float halfwidth = (ofGetWidth()*0.5/6)-4;
+		float halfwidth = (screenWidth*0.5/6)-4;
 		float halfheight = 320;
 		 
 		 
@@ -67,11 +69,23 @@ void ofApp::setup(){
 		
 		// warp points
 		vector<ofPoint> points;
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.24, ofGetWidth()*0.63), ofGetHeight()*0.40));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.37, ofGetWidth()*0.76), ofGetHeight()*0.40));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*0.15, ofGetWidth()*1.2), ofGetHeight()*0.87));
-		points.push_back(ofPoint(ofMap(i, 0, 3, ofGetWidth()*-0.2, ofGetWidth()*0.86), ofGetHeight()*0.87));
-		
+     // Settings for 50 degree angle
+//		points.push_back(ofPoint(ofMap(i, 0, 3, screenWidth*0.24, screenWidth*0.63), screenHeight*0.40));
+//		points.push_back(ofPoint(ofMap(i, 0, 3, screenWidth*0.37, screenWidth*0.76), screenHeight*0.40));
+//		points.push_back(ofPoint(ofMap(i, 0, 3, screenWidth*0.15, screenWidth*1.2), screenHeight*0.87));
+//		points.push_back(ofPoint(ofMap(i, 0, 3, screenWidth*-0.2, screenWidth*0.86), screenHeight*0.87));
+        
+        // Settings for 30 degree angle
+        float topWidth = (float) screenWidth *  0.52 / 4.0;
+        float topLeft = (float) screenWidth * 0.24;
+        float botWidth = (float) screenWidth *  1.05 / 4.0;
+        float botLeft = (screenWidth/2.0f) - (botWidth*4.0f/2.0f); //  (float) screenWidth*-0.2;
+        
+        points.push_back(ofPoint(ofMap(i, 0, 3, topLeft, topLeft + (topWidth*3)), screenHeight*0.32));
+		points.push_back(ofPoint(ofMap(i, 0, 3, topLeft + topWidth, topLeft + (topWidth*4)), screenHeight*0.32));
+		points.push_back(ofPoint(ofMap(i, 0, 3, botLeft + botWidth, botLeft + (botWidth*4)), screenHeight*0.87));
+		points.push_back(ofPoint(ofMap(i, 0, 3, botLeft, botLeft + (botWidth*3)), screenHeight*0.87));
+        
 		for(int i = 0; i<points.size(); i++) points[i]*=imageScale;
 		
 		int secondTrack = -1;
@@ -82,7 +96,7 @@ void ofApp::setup(){
 	}
 	
     //Load our images
-    audiencePreview.loadImage("img/FPORoom.png");
+    audiencePreview.loadImage("img/RoomPreview.png");
     titleScreen.loadImage("img/TitleScreen.jpg");
     bandLogo.loadImage("img/BandLogoSmall.png");
     
@@ -154,8 +168,9 @@ void ofApp::draw(){
 	
 	ofSetColor(255 * camBrightness);
 	current.draw(0,0, 1280, 720);
-	//ofSetColor(100);
-	//audiencePreview.draw(0,0,1280,720);
+	
+    ofSetColor(100);
+	if(showPreview) audiencePreview.draw(0,0,1280,720);
    
 
 	
@@ -166,6 +181,11 @@ void ofApp::draw(){
     ofDisableBlendMode();
 	ofPopMatrix(); 
 	
+    if(disableMirror) {
+        ofDrawBitmapString("MIRROR DISABLED", 300,20);
+        
+        
+    }
 	
 	for(int i = 0; i<audienceSections.size(); i++) {
 		audienceSections[i].draw(appGui.getVisible());
@@ -248,6 +268,7 @@ void ofApp::initGui() {
 	appGui.add(motionThreshold.set("motion threshold", 0,0,255));
 	
 	appGui.add(disableMirror.set("disable mirror", false));
+	appGui.add(showPreview.set("show preview", false));
 	
 	appGui.load();
 	for(int i = 0; i<audienceSections.size(); i++) {
@@ -255,7 +276,7 @@ void ofApp::initGui() {
 		audienceSections[i].motionLevelRaw = 0;
 	}
 	disableMirror = false;
-	
+    showPreview = false;
 }
 
 //--------------------------------------------------------------
@@ -299,8 +320,12 @@ void ofApp::keyPressed(int key){
         }else {
             showTitle = false;
         }
+    } else if (key=='m') {
+        disableMirror = !disableMirror;
+    }  else if (key=='p') {
+        showPreview = !showPreview;
     }
-	
+
 	if(appGui.getVisible()) {
 		if(key == 'm') { // set maximum
 			for(int i = 0; i<audienceSections.size(); i++) {

@@ -1336,7 +1336,7 @@
 					/Users/seb/Dropbox/openFrameworks/addons/ofxOpenCv/libs/opencv/lib/win_cb,
 				);
 				PRODUCT_NAME = MotionAbletonDebug;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -1475,7 +1475,7 @@
 					/Users/seb/Dropbox/openFrameworks/addons/ofxOpenCv/libs/opencv/lib/win_cb,
 				);
 				PRODUCT_NAME = MotionAbleton;
-				SDKROOT = macosx10.8;
+				SDKROOT = macosx10.9;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
