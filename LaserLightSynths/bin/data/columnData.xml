@@ -1,14 +1,14 @@
 <Column_Data>
 	<group>
-		<pos>633.6, 484.8, 0</pos>
-		<scale>1</scale>
+		<pos>678.4, 681.6, -700</pos>
+		<scale>1.0165</scale>
 		<rot>5.25, 0, -0.299999</rot>
 	<col_radius>30.925</col_radius>
-		<col_height>258.57</col_height>
-	<col_spacing>210.3</col_spacing>
-	<col_offset>16.92</col_offset>
-	<col_radius1>28.93</col_radius1>
-		<col_radius2>32.92</col_radius2>
+		<col_height>655.345</col_height>
+	<col_spacing>412.675</col_spacing>
+	<col_offset>29.405</col_offset>
+	<col_radius1>52.87</col_radius1>
+		<col_radius2>66.835</col_radius2>
 	</group>
 <Column_Data/>
 </Column_Data>

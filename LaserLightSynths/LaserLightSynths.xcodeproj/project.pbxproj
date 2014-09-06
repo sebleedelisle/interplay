@@ -50,11 +50,6 @@
 		12C9A61C18CB7C6B00499D1D /* ofxSlider.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A3DF18CB7C6A00499D1D /* ofxSlider.cpp */; };
 		12C9A61D18CB7C6B00499D1D /* ofxSliderGroup.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A3E118CB7C6A00499D1D /* ofxSliderGroup.cpp */; };
 		12C9A61E18CB7C6B00499D1D /* ofxToggle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A3E318CB7C6A00499D1D /* ofxToggle.cpp */; };
-		12C9A63018CB7C6B00499D1D /* libdc1394.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C9A4C918CB7C6B00499D1D /* libdc1394.a */; };
-		12C9A63118CB7C6C00499D1D /* libusb-1.0.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 12C9A4CA18CB7C6B00499D1D /* libusb-1.0.a */; };
-		12C9A63218CB7C6C00499D1D /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A4CE18CB7C6B00499D1D /* Camera.cpp */; };
-		12C9A63318CB7C6C00499D1D /* Grabber.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A4D018CB7C6B00499D1D /* Grabber.cpp */; };
-		12C9A63418CB7C6C00499D1D /* PointGrey.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12C9A4D318CB7C6B00499D1D /* PointGrey.cpp */; };
 		12D0ACF618AE3BEB0028BAFC /* matrix_funcs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D0ACBE18AE3BEB0028BAFC /* matrix_funcs.cpp */; };
 		12D0ACF718AE3BEB0028BAFC /* QuadWarp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D0ACC018AE3BEB0028BAFC /* QuadWarp.cpp */; };
 		12D0ACF818AE3BEB0028BAFC /* Warper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 12D0ACC218AE3BEB0028BAFC /* Warper.cpp */; };
@@ -282,32 +277,6 @@
 		12C9A40B18CB7C6B00499D1D /* ofxIldaPoly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaPoly.h; sourceTree = "<group>"; };
 		12C9A40C18CB7C6B00499D1D /* ofxIldaPolyProcessor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaPolyProcessor.h; sourceTree = "<group>"; };
 		12C9A40D18CB7C6B00499D1D /* ofxIldaRenderTarget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxIldaRenderTarget.h; sourceTree = "<group>"; };
-		12C9A4B518CB7C6B00499D1D /* dc1394.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394.h; sourceTree = "<group>"; };
-		12C9A4B618CB7C6B00499D1D /* dc1394_camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_camera.h; sourceTree = "<group>"; };
-		12C9A4B718CB7C6B00499D1D /* dc1394_capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_capture.h; sourceTree = "<group>"; };
-		12C9A4B818CB7C6B00499D1D /* dc1394_control.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_control.h; sourceTree = "<group>"; };
-		12C9A4B918CB7C6B00499D1D /* dc1394_conversions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_conversions.h; sourceTree = "<group>"; };
-		12C9A4BA18CB7C6B00499D1D /* dc1394_format7.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_format7.h; sourceTree = "<group>"; };
-		12C9A4BB18CB7C6B00499D1D /* dc1394_iso.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_iso.h; sourceTree = "<group>"; };
-		12C9A4BC18CB7C6B00499D1D /* dc1394_log.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_log.h; sourceTree = "<group>"; };
-		12C9A4BD18CB7C6B00499D1D /* dc1394_register.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_register.h; sourceTree = "<group>"; };
-		12C9A4BE18CB7C6B00499D1D /* dc1394_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_types.h; sourceTree = "<group>"; };
-		12C9A4BF18CB7C6B00499D1D /* dc1394_utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_utils.h; sourceTree = "<group>"; };
-		12C9A4C018CB7C6B00499D1D /* dc1394_video.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = dc1394_video.h; sourceTree = "<group>"; };
-		12C9A4C218CB7C6B00499D1D /* capture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = capture.h; sourceTree = "<group>"; };
-		12C9A4C418CB7C6B00499D1D /* avt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = avt.h; sourceTree = "<group>"; };
-		12C9A4C518CB7C6B00499D1D /* basler.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basler.h; sourceTree = "<group>"; };
-		12C9A4C618CB7C6B00499D1D /* basler_sff.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = basler_sff.h; sourceTree = "<group>"; };
-		12C9A4C718CB7C6B00499D1D /* pixelink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pixelink.h; sourceTree = "<group>"; };
-		12C9A4C918CB7C6B00499D1D /* libdc1394.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdc1394.a; sourceTree = "<group>"; };
-		12C9A4CA18CB7C6B00499D1D /* libusb-1.0.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = "libusb-1.0.a"; sourceTree = "<group>"; };
-		12C9A4CE18CB7C6B00499D1D /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
-		12C9A4CF18CB7C6B00499D1D /* Camera.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Camera.h; sourceTree = "<group>"; };
-		12C9A4D018CB7C6B00499D1D /* Grabber.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Grabber.cpp; sourceTree = "<group>"; };
-		12C9A4D118CB7C6B00499D1D /* Grabber.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Grabber.h; sourceTree = "<group>"; };
-		12C9A4D218CB7C6B00499D1D /* ofxLibdc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ofxLibdc.h; sourceTree = "<group>"; };
-		12C9A4D318CB7C6B00499D1D /* PointGrey.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PointGrey.cpp; sourceTree = "<group>"; };
-		12C9A4D418CB7C6B00499D1D /* PointGrey.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointGrey.h; sourceTree = "<group>"; };
 		12D0ACBE18AE3BEB0028BAFC /* matrix_funcs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = matrix_funcs.cpp; sourceTree = "<group>"; };
 		12D0ACBF18AE3BEB0028BAFC /* matrix_funcs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = matrix_funcs.h; sourceTree = "<group>"; };
 		12D0ACC018AE3BEB0028BAFC /* QuadWarp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = QuadWarp.cpp; sourceTree = "<group>"; };
@@ -440,7 +409,7 @@
 		E45BE9770E8CC7DD009D7055 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		E45BE9790E8CC7DD009D7055 /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = /System/Library/Frameworks/OpenGL.framework; sourceTree = "<absolute>"; };
 		E45BE97A0E8CC7DD009D7055 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		E4B69B5B0A3A1756003C02F2 /* LaserShowDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = LaserShowDebug.app; path = LaserLightSynthsDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E4B69B5B0A3A1756003C02F2 /* LaserLightSynthsDebug.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LaserLightSynthsDebug.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4B69E1D0A3A1BDC003C02F2 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = src/main.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1E0A3A1BDC003C02F2 /* ofApp.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.cpp; fileEncoding = 30; name = ofApp.cpp; path = src/ofApp.cpp; sourceTree = SOURCE_ROOT; };
 		E4B69E1F0A3A1BDC003C02F2 /* ofApp.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = ofApp.h; path = src/ofApp.h; sourceTree = SOURCE_ROOT; };
@@ -525,8 +494,6 @@
 				E4C2424810CC5A17004149E2 /* Cocoa.framework in Frameworks */,
 				E4C2424910CC5A17004149E2 /* IOKit.framework in Frameworks */,
 				E7E077E515D3B63C0020DFD4 /* CoreVideo.framework in Frameworks */,
-				12C9A63018CB7C6B00499D1D /* libdc1394.a in Frameworks */,
-				12C9A63118CB7C6C00499D1D /* libusb-1.0.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -936,104 +903,6 @@
 			path = src;
 			sourceTree = "<group>";
 		};
-		12C9A40E18CB7C6B00499D1D /* ofxLibdc */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4B118CB7C6B00499D1D /* libs */,
-				12C9A4CD18CB7C6B00499D1D /* src */,
-			);
-			name = ofxLibdc;
-			path = ../addons/ofxLibdc;
-			sourceTree = "<group>";
-		};
-		12C9A4B118CB7C6B00499D1D /* libs */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4B218CB7C6B00499D1D /* osx */,
-			);
-			path = libs;
-			sourceTree = "<group>";
-		};
-		12C9A4B218CB7C6B00499D1D /* osx */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4B318CB7C6B00499D1D /* include */,
-				12C9A4C818CB7C6B00499D1D /* lib */,
-			);
-			path = osx;
-			sourceTree = "<group>";
-		};
-		12C9A4B318CB7C6B00499D1D /* include */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4B418CB7C6B00499D1D /* dc1394 */,
-			);
-			path = include;
-			sourceTree = "<group>";
-		};
-		12C9A4B418CB7C6B00499D1D /* dc1394 */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4B518CB7C6B00499D1D /* dc1394.h */,
-				12C9A4B618CB7C6B00499D1D /* dc1394_camera.h */,
-				12C9A4B718CB7C6B00499D1D /* dc1394_capture.h */,
-				12C9A4B818CB7C6B00499D1D /* dc1394_control.h */,
-				12C9A4B918CB7C6B00499D1D /* dc1394_conversions.h */,
-				12C9A4BA18CB7C6B00499D1D /* dc1394_format7.h */,
-				12C9A4BB18CB7C6B00499D1D /* dc1394_iso.h */,
-				12C9A4BC18CB7C6B00499D1D /* dc1394_log.h */,
-				12C9A4BD18CB7C6B00499D1D /* dc1394_register.h */,
-				12C9A4BE18CB7C6B00499D1D /* dc1394_types.h */,
-				12C9A4BF18CB7C6B00499D1D /* dc1394_utils.h */,
-				12C9A4C018CB7C6B00499D1D /* dc1394_video.h */,
-				12C9A4C118CB7C6B00499D1D /* macosx */,
-				12C9A4C318CB7C6B00499D1D /* vendor */,
-			);
-			path = dc1394;
-			sourceTree = "<group>";
-		};
-		12C9A4C118CB7C6B00499D1D /* macosx */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4C218CB7C6B00499D1D /* capture.h */,
-			);
-			path = macosx;
-			sourceTree = "<group>";
-		};
-		12C9A4C318CB7C6B00499D1D /* vendor */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4C418CB7C6B00499D1D /* avt.h */,
-				12C9A4C518CB7C6B00499D1D /* basler.h */,
-				12C9A4C618CB7C6B00499D1D /* basler_sff.h */,
-				12C9A4C718CB7C6B00499D1D /* pixelink.h */,
-			);
-			path = vendor;
-			sourceTree = "<group>";
-		};
-		12C9A4C818CB7C6B00499D1D /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4C918CB7C6B00499D1D /* libdc1394.a */,
-				12C9A4CA18CB7C6B00499D1D /* libusb-1.0.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		12C9A4CD18CB7C6B00499D1D /* src */ = {
-			isa = PBXGroup;
-			children = (
-				12C9A4CE18CB7C6B00499D1D /* Camera.cpp */,
-				12C9A4CF18CB7C6B00499D1D /* Camera.h */,
-				12C9A4D018CB7C6B00499D1D /* Grabber.cpp */,
-				12C9A4D118CB7C6B00499D1D /* Grabber.h */,
-				12C9A4D218CB7C6B00499D1D /* ofxLibdc.h */,
-				12C9A4D318CB7C6B00499D1D /* PointGrey.cpp */,
-				12C9A4D418CB7C6B00499D1D /* PointGrey.h */,
-			);
-			path = src;
-			sourceTree = "<group>";
-		};
 		12D0ACA918AE3BEB0028BAFC /* SharedCode */ = {
 			isa = PBXGroup;
 			children = (
@@ -1337,7 +1206,6 @@
 				12C9A3BD18CB7C6A00499D1D /* ofxEtherdream */,
 				12C9A3D218CB7C6A00499D1D /* ofxGui */,
 				12C9A3E518CB7C6A00499D1D /* ofxIlda */,
-				12C9A40E18CB7C6B00499D1D /* ofxLibdc */,
 				12A8CEC618B82671006E42BA /* ofxSvg */,
 				a0b90d3b0adb9c1716816714bf7f212b /* ofxOpenCv */,
 				1f4fb5c423662b96adfdcc0badec1cb0 /* ofxXmlSettings */,
@@ -1403,7 +1271,7 @@
 				E4EEC9E9138DF44700A80321 /* openFrameworks */,
 				BB4B014C10F69532006C3DED /* addons */,
 				E45BE5980E8CC70C009D7055 /* frameworks */,
-				E4B69B5B0A3A1756003C02F2 /* LaserShowDebug.app */,
+				E4B69B5B0A3A1756003C02F2 /* LaserLightSynthsDebug.app */,
 			);
 			sourceTree = "<group>";
 		};
@@ -1551,7 +1419,7 @@
 			);
 			name = LaserLightSynths;
 			productName = myOFApp;
-			productReference = E4B69B5B0A3A1756003C02F2 /* LaserShowDebug.app */;
+			productReference = E4B69B5B0A3A1756003C02F2 /* LaserLightSynthsDebug.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1686,9 +1554,6 @@
 				12E57B4C19B848F400F9709D /* ofxMidiMessage.cpp in Sources */,
 				12C9A61D18CB7C6B00499D1D /* ofxSliderGroup.cpp in Sources */,
 				12C9A61E18CB7C6B00499D1D /* ofxToggle.cpp in Sources */,
-				12C9A63218CB7C6C00499D1D /* Camera.cpp in Sources */,
-				12C9A63318CB7C6C00499D1D /* Grabber.cpp in Sources */,
-				12C9A63418CB7C6C00499D1D /* PointGrey.cpp in Sources */,
 				12E57DAB18CF3300008B8366 /* PipeOrganData.cpp in Sources */,
 				1296BC4E18CF57C3004FCE27 /* DomeData.cpp in Sources */,
 				12A6512418D07A9E005BD577 /* EditableBezier.cpp in Sources */,
@@ -1961,14 +1826,6 @@
 					../addons/ofxGui/src,
 					../addons/ofxIlda/libs,
 					../addons/ofxIlda/src,
-					../addons/ofxLibdc/libs,
-					../addons/ofxLibdc/libs/osx,
-					../addons/ofxLibdc/libs/osx/include,
-					../addons/ofxLibdc/libs/osx/include/dc1394,
-					../addons/ofxLibdc/libs/osx/include/dc1394/macosx,
-					../addons/ofxLibdc/libs/osx/include/dc1394/vendor,
-					../addons/ofxLibdc/libs/osx/lib,
-					../addons/ofxLibdc/src,
 				);
 				ICON = "$(ICON_NAME_DEBUG)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
@@ -2039,6 +1896,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_52)",
 					"\"$(SRCROOT)/../addons/ofxLibdc/libs/osx/lib\"",
 				);
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxOpenCv/libs/opencv/lib/osx/opencv.a,
+				);
 				PRODUCT_NAME = LaserLightSynthsDebug;
 				SDKROOT = macosx10.8;
 				WRAPPER_EXTENSION = app;
@@ -2103,14 +1964,6 @@
 					../addons/ofxGui/src,
 					../addons/ofxIlda/libs,
 					../addons/ofxIlda/src,
-					../addons/ofxLibdc/libs,
-					../addons/ofxLibdc/libs/osx,
-					../addons/ofxLibdc/libs/osx/include,
-					../addons/ofxLibdc/libs/osx/include/dc1394,
-					../addons/ofxLibdc/libs/osx/include/dc1394/macosx,
-					../addons/ofxLibdc/libs/osx/include/dc1394/vendor,
-					../addons/ofxLibdc/libs/osx/lib,
-					../addons/ofxLibdc/src,
 				);
 				ICON = "$(ICON_NAME_RELEASE)";
 				ICON_FILE = "$(ICON_FILE_PATH)$(ICON)";
@@ -2180,6 +2033,10 @@
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_50)",
 					"$(LIBRARY_SEARCH_PATHS_QUOTED_FOR_TARGET_51)",
 					"\"$(SRCROOT)/../addons/ofxLibdc/libs/osx/lib\"",
+				);
+				OTHER_LDFLAGS = (
+					"$(OF_CORE_LIBS)",
+					../../../addons/ofxOpenCv/libs/opencv/lib/osx/opencv.a,
 				);
 				PRODUCT_NAME = LaserLightSynths;
 				SDKROOT = macosx10.8;

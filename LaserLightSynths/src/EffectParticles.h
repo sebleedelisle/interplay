@@ -10,6 +10,7 @@
 #include "ParticleSystemManager.h"
 #include "ParticleRendererLaser.h"
 #include "ParticleRendererLaserLine.h"
+#include "ParticleRendererGlitchLineLaser.h"
 #include "PipeOrganData.h"
 #include "ColumnData.h"
 
@@ -17,7 +18,9 @@
 class EffectParticles {
 
 	public : 
-	EffectParticles() : particleSystemManager(*ParticleSystemManager::instance()){};
+	EffectParticles() : particleSystemManager(*ParticleSystemManager::instance()){
+		mode = 0;
+	};
 
 	void update();
 	
@@ -36,5 +39,7 @@ class EffectParticles {
 	ParticleSystemManager& particleSystemManager;
 	PipeOrganData* pipeOrganData = NULL;
 	ColumnData* colData = NULL;
+	
+	int mode;
 
 };

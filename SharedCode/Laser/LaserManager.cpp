@@ -648,7 +648,7 @@ void LaserManager :: addLaserSVG(ofxSVG & svg, ofPoint pos, ofPoint scale, float
 		
 		vector<ofPolyline>& lines = svg.getPathAt(i).getOutline();
 		ofColor col = svg.getPathAt(i).getStrokeColor();
-		cout << "  col = " <<col << endl;
+		//cout << "  col = " <<col << endl;
 		
 		for(int j=0; j<lines.size(); j++) {
 			ofPolyline line = lines[j];

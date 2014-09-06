@@ -1,6 +1,6 @@
 <LaserManager>
 		<Laser_Manager>
-			<UnknownName>ETHERDREAM_IDLE</UnknownName>
+			<UnknownName>ETHERDREAM_RUNNING</UnknownName>
 			<intensity>0.795</intensity>
 			<test_pattern>0</test_pattern>
 			<sync_delay>0</sync_delay>

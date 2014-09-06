@@ -39,7 +39,7 @@ void ofApp::setup(){
     svgs.back().load("laserlightsynths.svg");
     
 	svgs.push_back(ofxSVG());
-	svgs.back().load("lighthouse.svg");
+	svgs.back().load("laserlightsynths2.svg");
 
 	projectorFbo.allocate(1024, 768, GL_RGB, 4);
 	uiFbo.allocate(screenWidth, screenHeight, GL_RGB, 2); 
@@ -252,14 +252,12 @@ void ofApp::draw(){
 	
 	drawEffects();
     
-    
-        if((currentSVG>=0) && (currentSVG<svgs.size())) {
-            laserManager.addLaserSVG(svgs[currentSVG], ofPoint(640,580),ofPoint(0.5,0.5));
-        
-       
-        }
+
+	if((currentSVG>=0) && (currentSVG<svgs.size())) {
+		laserManager.addLaserSVG(svgs[currentSVG], ofPoint(640,220),ofPoint(1.2,1.2));
 	
-  	
+   
+	}
 	
 	laserManager.draw();
 	laserManager.renderLaserPath(ofRectangle(0,0,screenWidth, screenHeight), false);
@@ -282,6 +280,13 @@ void ofApp::draw(){
 
 void ofApp :: drawEffects() {
 	
+
+	drawSpirograph(ofPoint(640,250), 20,50,80, ofClamp(fmod(sync.currentBarFloat,2), 1,2)-1,ofClamp(fmod(sync.currentBarFloat,2), 0,1),fmod(sync.currentBarFloat,2) * 360);
+	
+	
+	
+	
+	/*
 	if((sync.currentBar>=24) && (sync.currentBar<28)) {
 		// CHEVRONS
 		effectPipeOrganLines.setMode(0);
@@ -381,7 +386,7 @@ void ofApp :: drawEffects() {
 		laserManager.addLaserText(" THANKS!", ofPoint(640,480), 10,col, true);
 		
 	}
-	
+	*/
 	particleSystemManager.draw();
 	effectLaserBeams.draw(laserManager, masterVolume);
 	effectDomeLines.draw(sync, masterVolume, laserManager);
@@ -407,7 +412,11 @@ void ofApp ::  drawSpirograph(ofPoint pos, int numrevolutions, float smallradius
 		float angle2 = ofMap(i, 0, totaldivisions, 0, 360*numrevolutions);
 		
 		float sr = smallradius;
-		//if((i/10)<volumes.size()) sr*= ofMap(volumes[i/10],0,1,0.8,1.1,true);
+//		if((i/10)<volumes.size())
+//			sr*= ofMap(volumes[i/10],0,1,0.8,1.1,true);
+//		
+		sr*= ofMap(fmod(sync.beatPulse + ((float)i*0.0053),1), 0, 1, 0.6,1);
+		
 		p.set(sr,0,0);
 		
 		p.rotate(angle2, ofPoint(0,0,1));
@@ -514,43 +523,49 @@ void ofApp::keyPressed(int key){
 	 
 
 	if(key == '1') {
-		effectLaserBeams.mode = 0;
-		effectPipeOrganLines.setMode(0);
-		effectDomeLines.setMode(1);
+		effectParticles.mode = 1;
+		
+		//effectLaserBeams.mode = 0;
+		//effectPipeOrganLines.setMode(0);
+		//effectDomeLines.setMode(1);
 	}
 	if(key == '2') {
-		effectLaserBeams.mode = 0;
-		effectPipeOrganLines.setMode(0);
-		effectDomeLines.setMode(2);
+		effectParticles.mode = 2;
+//		effectLaserBeams.mode = 0;
+//		effectPipeOrganLines.setMode(0);
+//		effectDomeLines.setMode(2);
 	}
 	if(key == '3') {
-		effectLaserBeams.mode = 1;
-		effectPipeOrganLines.setMode(0);
-		effectDomeLines.setMode(0);
+		effectParticles.mode = 3;
+//		effectLaserBeams.mode = 1;
+//		effectPipeOrganLines.setMode(0);
+//		effectDomeLines.setMode(0);
 	}
 	if(key == '4') {
-		effectLaserBeams.mode = 2;
-		effectPipeOrganLines.setMode(0);
-		effectDomeLines.setMode(0);
+		effectParticles.mode = 4;
+//		effectLaserBeams.mode = 2;
+//		effectPipeOrganLines.setMode(0);
+//		effectDomeLines.setMode(0);
 	}
 	if(key == '5') {
-		effectLaserBeams.mode = 0;
-		effectPipeOrganLines.setMode(1);
-		effectDomeLines.setMode(0);
+//		effectLaserBeams.mode = 0;
+//		effectPipeOrganLines.setMode(1);
+//		effectDomeLines.setMode(0);
 	}
 	if(key == '6') {
-		effectLaserBeams.mode = 0;
-		effectPipeOrganLines.setMode(2);
-		effectDomeLines.setMode(0);
+//		effectLaserBeams.mode = 0;
+//		effectPipeOrganLines.setMode(2);
+//		effectDomeLines.setMode(0);
 	}
 	if(key == '7') {
 	
-		effectLaserBeams.mode = 0;
-		effectPipeOrganLines.setMode(3);
-		effectDomeLines.setMode(0);
+//		effectLaserBeams.mode = 0;
+//		effectPipeOrganLines.setMode(3);
+//		effectDomeLines.setMode(0);
 	}
 	
 	if(key == '0') {
+		effectParticles.mode = 0;
 		effectLaserBeams.mode = 0;
 		effectPipeOrganLines.setMode(0);
 		effectDomeLines.setMode(0);

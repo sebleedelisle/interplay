@@ -17,18 +17,18 @@ void draw();
 void ColumnData :: init() {
 	
 	
-	params.add(pos.set("pos", ofPoint(640,480), ofPoint(0,0, -400), ofPoint(1280,960, 0)));
+	params.add(pos.set("pos", ofPoint(640,480), ofPoint(0,0, -800), ofPoint(1280,960, 0)));
 	params.add(scale.set("scale", 1, 0.1, 4));
 	
 	params.add(rotation.set("rot", ofPoint(30,0,0), ofPoint(0,-10,-10), ofPoint(50,10,10)));
 	
-	params.add(colSpacing.set("col spacing", 20, 1, 300));
+	params.add(colSpacing.set("col spacing", 20, 1, 500));
 	
 	params.add(colRadius1.set("col radius1", 20, 1, 400));
 	params.add(colRadius2.set("col radius2", 20, 1, 400));
-	params.add(colHeight.set("col height", 20, 1, 600));
+	params.add(colHeight.set("col height", 20, 1, 1000));
 	
-	params.add(colOffset.set("col offset", 20, 1, 200));
+	params.add(colOffset.set("col offset", 20, 1, 300));
 	
 	
 //	params.add(start.set("start", ofPoint(-500,300), ofPoint(-640,-480),ofPoint(640,480)));
@@ -262,6 +262,7 @@ ofPoint ColumnData:: getColumnPosition(int index, float heightUnit, float rotati
 	colpos.y += ofMap(heightUnit, 0, 1, -colHeight/2.0f, colHeight/2.0f);
 	colpos += colPositions[index];
 	colpos.rotate(rotation->x, rotation->y, rotation->z);
+	colpos*=scale;
 	
 	colpos += (ofVec3f)pos;// + colPositions[i];
 	return colpos;
