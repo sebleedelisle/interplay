@@ -1,10 +1,10 @@
 <Column_Data>
 	<group>
-		<pos>678.4, 681.6, -700</pos>
+		<pos>678.4, 542.4, -700</pos>
 		<scale>1.0165</scale>
 		<rot>5.25, 0, -0.299999</rot>
 	<col_radius>30.925</col_radius>
-		<col_height>655.345</col_height>
+		<col_height>515.485</col_height>
 	<col_spacing>412.675</col_spacing>
 	<col_offset>29.405</col_offset>
 	<col_radius1>52.87</col_radius1>

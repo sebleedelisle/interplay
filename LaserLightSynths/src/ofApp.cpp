@@ -35,8 +35,8 @@ void ofApp::setup(){
 	guideImage.loadImage("img/guide.jpg");
 
 	
-	svgs.push_back(ofxSVG());
-    svgs.back().load("laserlightsynths.svg");
+	//svgs.push_back(ofxSVG());
+    //svgs.back().load("laserlightsynths.svg");
     
 	svgs.push_back(ofxSVG());
 	svgs.back().load("laserlightsynths2.svg");
@@ -86,6 +86,7 @@ void ofApp::setup(){
 	appGui.add(laserColumnPoints.set("laser column points", false));
 	appGui.add(laserOrganPoints.set("laser organ points", false));
 	appGui.add(showGuideImage.set("show guide image", true));
+	appGui.add(useMidiClock.set("use Midi clock", true));
 	
 	
 	redGui.setup("Laser Red", "laserred.xml");
@@ -110,6 +111,8 @@ void ofApp::setup(){
 
 	
 	pipeOrganData.load();
+    pipeOrganData.updatePipes();
+    
 	columnData.init();
 	columnData.load();
 	
@@ -120,9 +123,11 @@ void ofApp::setup(){
 	
 	//effectDomeLines.setDomeData(&domeData);
 	effectParticles.setObjects(&pipeOrganData, &columnData);
+	effectPipeOrganLines.setObjects(&pipeOrganData, &particleSystemManager);
 	
 	
-	
+	showSpiro = false;
+    pitchPeak = 0;
 	
 	calculateScreenSizes();
 	
@@ -137,11 +142,16 @@ void ofApp::update(){
 	laserManager.update();
 	//if(music.getIsPlaying()) soundPositionMS = music.getPositionMS();
 
+    
 	//sync.update(soundPositionMS);
 	
 	//sync.update((float)midiFrameCount/24.0f * 60000.0f/sync.tempo );
-	sync.update(midiFrameCount);
-				
+    if(useMidiClock) {
+        sync.update(midiFrameCount);
+    } else {
+        sync.update((float)ofGetElapsedTimeMillis());
+        
+    }
 	//screenAnimation.update();
 	
 	particleSystemManager.update(deltaTime);
@@ -158,18 +168,22 @@ void ofApp::draw(){
 	ofBackground(0);
 	
 	
-	int numBands = 500;
-	float vol = 0;
-	
-	
-	float * val = ofSoundGetSpectrum(numBands);
-	
-	for(int i = 0;i<numBands; i++) {
-		vol+=val[i];
+//	int numBands = 500;
+//	float vol = 0;
+//	
+//	
+//	float * val = ofSoundGetSpectrum(numBands);
+//	
+//	for(int i = 0;i<numBands; i++) {
+//		vol+=val[i];
+//		
+//	}
+//    
+//    
+    masterVolume*= 0.99;
+    pitchPeak*=0.9;
 		
-	}
-
-		
+   // cout << "masterVolume " << masterVolume << endl;
 	uiFbo.begin();
 	ofSetupScreenPerspective(1280,960,50);
 
@@ -225,19 +239,17 @@ void ofApp::draw(){
 		
 		ofPoint pos = columnData.getColumnPosition(columnindex, 1, ofMap(msg.pitch, 60,84, 0.2, 0.8, true));
 		effectParticles.makeParticle(pos, columnindex);
+         masterVolume += (100.0f-masterVolume) * 0.5;
+        pitchPeak = (float) msg.pitch / 60.0f;
 		
 	}
 	
 	notes.clear();
 	
-	ofDrawBitmapString(ofToString(round(ofGetFrameRate())), 0,10);
+	//ofDrawBitmapString(ofToString(round(ofGetFrameRate())), 0,10);
+    ofDrawBitmapString(ofToString(round(masterVolume)), 0,10);
 	
-	
-	
-		
 	ofNoFill();
-	
-	
 	
 	uiFbo.end();
 
@@ -281,10 +293,8 @@ void ofApp::draw(){
 void ofApp :: drawEffects() {
 	
 
-	drawSpirograph(ofPoint(640,250), 20,50,80, ofClamp(fmod(sync.currentBarFloat,2), 1,2)-1,ofClamp(fmod(sync.currentBarFloat,2), 0,1),fmod(sync.currentBarFloat,2) * 360);
-	
-	
-	
+	if(showSpiro) drawSpirograph(ofPoint(640,250), 20,50,80, ofClamp(fmod(sync.currentBarFloat,2), 1,2)-1,ofClamp(fmod(sync.currentBarFloat,2), 0,1),fmod(sync.currentBarFloat,2) * 360);
+
 	
 	/*
 	if((sync.currentBar>=24) && (sync.currentBar<28)) {
@@ -388,11 +398,11 @@ void ofApp :: drawEffects() {
 	}
 	*/
 	particleSystemManager.draw();
-	effectLaserBeams.draw(laserManager, masterVolume);
+	//effectLaserBeams.draw(laserManager, masterVolume);
 	effectDomeLines.draw(sync, masterVolume, laserManager);
 	
 	// TODO add frequency - notes?
-	effectPipeOrganLines.draw(sync, masterVolume, laserManager, 10);
+	effectPipeOrganLines.draw(sync, masterVolume, laserManager,pitchPeak);
 
 
 }
@@ -518,7 +528,10 @@ void ofApp::keyPressed(int key){
 	}
 	if(key=='c') {
 		currentSVG++;
-		if(currentSVG>=svgs.size()) currentSVG = -1; 
+		if(currentSVG>=svgs.size()) currentSVG = -1;
+	}
+    if(key=='a') {
+		showSpiro = !showSpiro;
 	}
 	 
 
@@ -549,18 +562,18 @@ void ofApp::keyPressed(int key){
 	}
 	if(key == '5') {
 //		effectLaserBeams.mode = 0;
-//		effectPipeOrganLines.setMode(1);
+		effectPipeOrganLines.setMode(1);
 //		effectDomeLines.setMode(0);
 	}
 	if(key == '6') {
 //		effectLaserBeams.mode = 0;
-//		effectPipeOrganLines.setMode(2);
+		effectPipeOrganLines.setMode(2);
 //		effectDomeLines.setMode(0);
 	}
 	if(key == '7') {
 	
 //		effectLaserBeams.mode = 0;
-//		effectPipeOrganLines.setMode(3);
+		effectPipeOrganLines.setMode(3);
 //		effectDomeLines.setMode(0);
 	}
 	
@@ -574,6 +587,36 @@ void ofApp::keyPressed(int key){
 	if(key == 's') {
 		effectParticles.makeStarBurst(0.5);
 	}
+    
+    if(key == 'e') {
+        ofxMidiMessage msg;
+        msg.channel = 1;
+        msg.pitch = ofRandom(60,80);
+        
+        notes.push_back(msg);
+    }
+    if(key == 'r') {
+        ofxMidiMessage msg;
+        msg.channel = 2;
+        msg.pitch = ofRandom(60,80);
+        
+        notes.push_back(msg);
+    }
+    if(key == 't') {
+        ofxMidiMessage msg;
+        msg.channel = 3;
+        msg.pitch = ofRandom(60,80);
+        
+        notes.push_back(msg);
+    }
+    if(key == 'y') {
+        ofxMidiMessage msg;
+        msg.channel = 4;
+        msg.pitch = ofRandom(60,80);
+        
+        notes.push_back(msg);
+    }
+
 
 }
 
@@ -714,6 +757,7 @@ void ofApp::newMidiMessage(ofxMidiMessage& msg) {
 	} else if (msg.status == MIDI_NOTE_ON) {
 	
 		notes.push_back(msg);
+       
 		
 	}
 	

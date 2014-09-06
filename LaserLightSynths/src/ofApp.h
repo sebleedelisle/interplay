@@ -78,6 +78,7 @@ class ofApp : public ofBaseApp, public ofxMidiListener {
 	ofParameter<bool> laserColumnPoints;
 	ofParameter<bool> laserOrganPoints;
 	ofParameter<bool> showGuideImage;
+    ofParameter<bool> useMidiClock; 
 	//ofParameter<bool> showBands;
 	
 	LaserManager& laserManager;
@@ -107,7 +108,7 @@ class ofApp : public ofBaseApp, public ofxMidiListener {
 	
 	ofPolyline poly;
 	
-	
+	bool showSpiro; 
 	
 	
 	ofxMidiIn midiIn;
@@ -115,6 +116,7 @@ class ofApp : public ofBaseApp, public ofxMidiListener {
 	int midiFrameCount = 0;
 	
 	vector<ofxMidiMessage> notes;
+    float pitchPeak;
 	
 	
 

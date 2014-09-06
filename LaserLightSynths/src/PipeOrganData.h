@@ -27,6 +27,8 @@ class PipeOrganData {
 	void mouseDragged(int x, int y);
 	void mousePressed(int x, int y);
 	void mouseReleased(int x, int y);
+    
+    void updatePipes(); 
 
 
 
